@@ -64,14 +64,11 @@ function getCountryNameFr(nameEn) {
 }
 
 // -------- NORMALISATION DES NOMS ----------
-// -------- NORMALISATION DES NOMS ----------
 function normalizeName(name) {
     return name
         .toLowerCase()
         .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
         .replace(/[^a-z0-9 ]/g, " ")
-        // Ajout de mots/abréviations à ignorer : 'america', 'dr' (pour Dem. Rep.)
-        // J'ai aussi ajouté 'islands' et 'is', car les noms d'îles sont souvent incohérents.
         .replace(/\b(the|of|and|republic|state|states|islamic|arab|democratic|people|union|federal|america|dr|islands|is)\b/g, "")
         .replace(/\s+/g, " ")
         .trim();
@@ -123,14 +120,12 @@ let timelineIndex = 0;
 let timelineTimer = null;
 let timelineReady = false;
 
-/* ============================================================
-   2. INITIALISATION LEAFLET
-============================================================ */
-map = L.map('map').setView([20, 0], 2);
+/*2. INITIALISATION LEAFLET*/
+map = L.map('map').setView([20, 0], 2)
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     minZoom: 1,
-    maxZoom: 6
+    maxZoom: 4
 }).addTo(map);
 
 /* 3. INFOBOX*/
