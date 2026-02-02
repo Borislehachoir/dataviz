@@ -13,7 +13,7 @@ body {
     flex-direction: column;
     min-height: 200vh;
     margin: 0;
-    background-color: #FAFAFA;
+    background-color: #001d3d;
     box-sizing: border-box;
 }
 
@@ -270,76 +270,7 @@ select {
 }
 #legend {display: none;}
 
-/*Frise Chronologique */ 
 
-.info {
-  margin-left: 1rem;
-}
-.timeline {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 80px;
-  padding: 40px;
-
-  --line-left: 0px;
-  --line-width: 0px;
-
-  margin-bottom: 50px;
-}
-
-.timeline-line {
-  border-top: 2px solid black; 
-  margin: 20px 0;
-}
-
-.timeline::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: var(--line-left);
-  width: var(--line-width);
-  height: 4px;
-  background-color:#000;
-  transform: translateY(-50%);
-  z-index: 0;
-  transition: all 0.3s ease;
-}
-
-.bubble {
-  position: relative;
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 20px;
-  font-weight: bold;
-  color: #265028;
-  z-index: 1;
-}
-
-.bubble h3 {
-  margin: 0;
-  font-size: 1.2em;
-  font-weight: bold;
-}
-
-.bubble p {
-  margin: 8px 0 0;
-  font-size: 1em;
-  font-weight: normal;
-}
-
-.pastel-1 { background-color: #ffd5cd; }
-.pastel-2 { background-color: #d4f1f4; }
-.pastel-3 { background-color: #e7d9ff; }
-.pastel-4 { background-color:antiquewhite;}
-.pastel-5 {background-color:bisque;}
-.pastel-6 {background-color:rgb(203, 241, 203) ;}
 
 /* Carte Leaflet */
  #map { height: 600px; width: 100%; margin-top:10px; }
@@ -382,7 +313,7 @@ footer.piedepage {
   align-items: center;
   width: 100%;
   min-height: 5%;
-  position: sticky;
+  position: relative;
   bottom: 0;
   padding: 20px 0;
   z-index: 1100;
