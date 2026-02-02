@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Comparatif PIB / Violences par armes à feu</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+
+<body>
+    <div id="intro-scene">
+        <div class="gun-icon" id="gun1"> <img src="gun.png" alt="gun-icon"></div>
+        <div class="gun-icon" id="gun2"><img src="gun.png" alt="gun-icon"></div>
+        <div class="bullet-icon" id="bullet1"></div>
+        <div class="bullet-icon" id="bullet2"></div>
+    </div>
+
+    <header>
+        <div class="header-top">
+            <div class="logo">
+                <img src="logo.png" alt="Logo Ponimat">
+                <div class="logo-text">
+                    <span>Ponimat - Depuis 1962</span>
+                    <p>"Celui qui a inventé le bateau a aussi inventé le naufrage"</p>
+                </div>
+            </div>
+            <div class="hamburger" onclick="toggleMenu()">MENU🍋</div>
+        </div>
+        <hr class="menu-separator hidden" id="separator">
+        <nav id="menu" class="hidden">
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="">Quelques graphiques</a></li>
+                <li><a href="">Espace définitions</a></li>
+                <li><a href="">A propos du site</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div id="accueil" class="info">
+
+        </div>
+        <section>
+            <h1 class="at-item">Bref contexte</h1>
+            <div>
+                <p> A la racine de ce projet, il y a une question. Quel lien peut-on faire entre les statistiques liées
+                    aux armes à feu, et le PIB d'un Etat ?
+                    Est-ce qu'être un état développé comme la France ou les Etats-Unis implique toujours que votre pays
+                    sera plus sécurisé, et plus strict ?
+                    Ou au contraire, est-ce que la richesse d'un pays n'empêche rien ?
+                    <br><br>
+                    J'ai donc regroupé deux ensembles de données :
+                <ul>
+                    <li>Les données sur la possession d'armes à feu, les taux de mortalité par armes à feu, et les
+                        suicides par armes à feu, trouvé sur le site Kaggle.</li>
+                    <li>Les données sur le PIB, provenant de la Banque Mondiale en 2024.</li>
+                </ul>
+                <br>
+                Les armes à feu, comme tous les outils, ont un grand nombre d'utilisations possibles. Je ne parlerais
+                pas de tir sportif, ou de chasseurs. Ici, je me concentrerais plutôt sur les meurtres, ou les suicides
+                que les armes causent.
+                En parlant de cela, je tenais à noter que ces données ne s'intéressant principalement qu'aux armes à
+                feu, on pourrait se méprendre sur certaines réalités.
+                Par exemple, on pourrait croire que la Corée du Sud a un taux de suicide de 0,04, mais c'est une
+                méprise, parce que c'est un taux de suicide <span style="font-style: italic;">seulement par arme à
+                    feu</span>.
+                La Corée du Sud, si on considère le taux de suicide avec toutes les méthodes employées, grimpe à
+                <span style="font-style: italic; color:#BF1A1A;">27,5 personnes pour 100 000 habitants</span>.
+                Le seul pays au dessus, le Lesotho, royaume enclavé dans l'Afrique du Sud, plafonne aux alentours de
+                <span style="font-style: italic; color:#BF1A1A;">29 personnes pour 100 000 habitants</span>.
+                </p>
+            </div>
+
+        </section>
+        <h1 class="at-item">Quelques graphiques...</h1>
+        <div class="graph-stack">
+            <div id="chartBest" class="chart-box"></div>
+            <div id="chartWorst" class="chart-box"></div>
+            <div id="chartRatioBest" class="chart-box"></div>
+        </div>
+
+        <h1 class="at-item">Carte Interactive : Possession d'armes et PIB</h1>
+
+        <!-- TIMELINE -->
+        <div style="margin-top:10px;">
+            <button id="playTimeline">▶️ Lecture</button>
+            <button id="pauseTimeline">⏸️ Pause</button>
+
+            <input type="range" id="timelineSlider" min="0" max="0" value="0" style="width:300px; margin-left:10px;">
+            <span id="timelineYear" style="font-weight:bold; margin-left:10px;"></span>
+        </div>
+
+        <!-- CHOIX INDICATEURS -->
+        <div style="margin-top:10px;">
+            <label for="indicator">Indicateur principal : </label>
+            <select id="indicator">
+                <option value="guns">Armes à feu</option>
+                <option value="gdp">PIB</option>
+            </select>
+
+            <label for="gunsField">Variable armes : </label>
+            <select id="gunsField">
+                <option value="Estimate of civilian firearms per 100 persons">Armes / 100 personnes</option>
+                <option value="Registered firearms">Armes enregistrées</option>
+                <option value="Unregistered firearms">Armes non enregistrées</option>
+                <option value="Gun Death Rate">Taux mortalité armes</option>
+                <option value="Suicide Rate by Firearm">Suicides par arme</option>
+            </select>
+
+            <label for="gdpYear">Année PIB : </label>
+            <select id="gdpYear"></select>
+        </div>
+
+        <div id="map"></div>
+        <div id="yearOverlay"></div>
+        <script src="carte.js"></script>
+    </main>
+
+    <footer class="piedepage"></footer>
+    <script>
+
+        function formatMoney(n) {
+            if (n === null || n === undefined) return '-';
+            const num = Number(n);
+            if (!isFinite(num)) return '-';
+            const abs = Math.abs(num);
+            if (abs >= 1e12) return (num / 1e12).toFixed(2) + '$ (x10^12)';
+            if (abs >= 1e9) return (num / 1e9).toFixed(2) + ' $ (x10^9)';
+            if (abs >= 1e6) return (num / 1e6).toFixed(2) + ' $ (x10^6)';
+            return num.toLocaleString();
+        };
+
+        function formatNumber(n) {
+            return formatMoney(n);
+        };
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+
+            const DATA = {
+                best: {
+                    countries: ['Japon', 'Roy.-U.', 'Allemagne', 'Singapour', 'Indonésie', 'Espagne', 'Pologne', 'France', 'Australie', 'Arabie Sao.'],
+                    gdp: [4026210821147, 3643834188783, 4659929336891, 547386645892, 1396300098191, 1722745978335, 914696430325, 3162079073496, 1752193307380, 1237529866667],
+                    rate: [0.02, 0.04, 0.08, 0.01, 0.06, 0.13, 0.08, 0.32, 0.18, 0.17]
+                },
+                worst: {
+                    countries: ['Nauru', 'Dominique', 'Belize', 'Îles Marshall', 'Palau', 'Lesotho', 'Comores', 'Guinée-Bissau', 'Îles Salomon', 'Salvador'],
+                    gdp: [160350639.5, 688881481.5, 3515783329, 280357844.2, 281849100, 2271541846, 1546164420, 2119865935, 1760767447, 35364960000],
+                    rate: [1.18, 3.53, 15.04, 1.07, 0.78, 5.3, 3.16, 3.43, 1.91, 35.5]
+                }
+            };
+
+            DATA.best.ratio = DATA.best.gdp.map((g, i) => g / DATA.best.rate[i]);
+            DATA.worst.ratio = DATA.worst.gdp.map((g, i) => g / DATA.worst.rate[i]);
+
+            function createBarLineChart(domId, title, countries, gdp, rates, rateMax) {
+                const chartElement = document.getElementById(domId);
+                if (!chartElement) {
+                    console.error(`Conteneur ECharts non trouvé : #${domId}`);
+                    return;
+                }
+                const chart = echarts.init(chartElement);
+
+                chart.setOption({
+                    title: { text: title, left: 'center' },
+                    grid: { left: 60, right: 60, top: 60, bottom: 60 },
+                    legend: { data: ['PIB (US$)', 'Taux décès / 100k'], bottom: 10 },
+                    tooltip: {
+                        trigger: 'axis',
+                        formatter: params => {
+                            const i = params[0].dataIndex;
+                            return `
+                        <b>${countries[i]}</b><br>
+                        ${params[0].marker} PIB : ${formatMoney(gdp[i])}<br>
+                        ${params[1].marker} Taux : ${rates[i]}
+                        `;
+                        }
+                    },
+                    xAxis: { type: 'category', data: countries },
+                    yAxis: [
+                        { type: 'value', name: 'PIB', axisLabel: { formatter: val => formatMoney(val) } },
+                        { type: 'value', name: 'Taux décès ( en %)', min: 0, max: rateMax }
+                    ],
+                    series: [
+                        { name: 'PIB (US$)', type: 'bar', data: gdp, itemStyle: { color: '#4066FF' }, barMaxWidth: 40 },
+                        {
+                            name: 'Taux décès / 100k', type: 'line', yAxisIndex: 1, data: rates,
+                            itemStyle: { color: '#6CBF00' }, lineStyle: { width: 2 }, symbolSize: 7
+                        }
+                    ]
+                });
+            }
+
+            function createRatioChart(domId, title, countries, ratios) {
+                const chartElement = document.getElementById(domId);
+                if (!chartElement) {
+                    console.error(`Conteneur ECharts non trouvé : #${domId}`);
+                    return;
+                }
+                const chart = echarts.init(chartElement);
+
+                chart.setOption({
+                    title: { text: title, left: 'center' },
+                    grid: { left: 60, right: 40, top: 60, bottom: 60 },
+                    xAxis: { type: 'category', data: countries },
+                    yAxis: { type: 'value', name: 'Ratio PIB/Taux', axisLabel: { formatter: val => formatMoney(val) } },
+                    tooltip: {
+                        trigger: 'axis',
+                        formatter: params => {
+                            const i = params[0].dataIndex;
+                            return `<b>${countries[i]}</b><br>Ratio : <b>${formatMoney(ratios[i])}</b>`;
+                        }
+                    },
+                    series: [
+                        { type: 'bar', data: ratios, itemStyle: { color: '#9155FD' }, barMaxWidth: 40 }
+                    ]
+                });
+            }
+
+            // --- Initialisation des 3 graphiques (garantie d'exécution après le chargement du DOM) ---
+            createBarLineChart(
+                'chartBest',
+                'Top 10 Meilleurs Pays — PIB vs Taux de décès',
+                DATA.best.countries,
+                DATA.best.gdp,
+                DATA.best.rate,
+                0.35
+            );
+
+            createBarLineChart(
+                'chartWorst',
+                'Top 10 Pires Pays — PIB vs Taux de décès',
+                DATA.worst.countries,
+                DATA.worst.gdp,
+                DATA.worst.rate,
+                40
+            );
+
+            createRatioChart(
+                'chartRatioBest',
+                'Top 10 Meilleurs — Ratio PIB / Taux',
+                DATA.best.countries,
+                DATA.best.ratio
+            );
+        });
+
+        // Fonction Hamburger
+        function toggleMenu() {
+            const menu = document.getElementById("menu");
+            const separator = document.getElementById("separator");
+            menu.classList.toggle("hidden");
+            separator.classList.toggle("hidden");
+        }
+
+        window.addEventListener('resize', function () {
+            const menu = document.getElementById("menu");
+            if (window.innerWidth > 768) {
+                menu.classList.remove("hidden");
+            } else {
+                menu.classList.add("hidden");
+            }
+        });
+
+        window.dispatchEvent(new Event('resize'));
+    </script>
+    <script src="intro.js"></script>
+    <script src="bubbles.js"></script>
+</body>
+
+</html>
