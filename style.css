@@ -80,7 +80,7 @@ header {
     display: flex;
     flex-direction: column;
     width: 100%;
-    background-color: #1F3A5F;
+    background-color: #001d3d;
     padding-bottom: 10px;
 }
 
@@ -239,9 +239,18 @@ nav.hidden {
 
 h1 {
   margin-bottom: 20px;
-  color: #412B6B;
+  color: white;
   text-align: center;
 }
+.explications {
+  margin-bottom: 30px;
+  color: #ffffff;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  max-width: 800px;
+  padding: 50px;
+}
+
 select {
   margin: 10px 5px;
   padding: 5px 10px;
@@ -307,7 +316,7 @@ footer.piedepage {
   margin-top: 50px;
 }
 .piedepage {
-  background-color:#E97F4A;
+  background-color:#001d3d;
   display: flex;
   justify-content: center;
   align-items: center;

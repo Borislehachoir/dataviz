@@ -109,16 +109,12 @@ function bestMatch(countryName, candidates) {
             best = c;
         }
     }
-
-    // NOUVEAU SEUIL PLUS TOLÉRANT (e.g., 50%)
-    const threshold = Math.floor(normA.length * 0.5); 
-    // Si cela ne suffit pas, essayez 0.6
-    
+    const threshold = Math.floor(normA.length * 0.5);  
     return bestDist <= threshold ? best : null;
 }
 
 let worldData, gunData, gdpData;
-let gunsField = "Estimate of civilian firearms per 100 persons";
+let gunsField = "Estimation de possession d'armes civiles pour 100 personnes";
 let indicator = "guns";
 let gdpYear = "2023";
 
@@ -137,9 +133,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 6
 }).addTo(map);
 
-/* ============================================================
-   3. INFOBOX
-============================================================ */
+/* 3. INFOBOX*/
 const info = L.control();
 info.onAdd = function() {
     this._div = L.DomUtil.create('div', 'info');
@@ -152,7 +146,6 @@ info.update = function(props) {
         return;
     }
 
-    // Sélectionne le nom FR si dispo
     const name = props.name_fr || props.name;
 
     // Valeur de l’indicateur (guns ou GDP)
@@ -185,9 +178,6 @@ const getColorGDP = d =>
     d > 1e10 ? '#9ecae1' :
     d > 1e9 ? '#c6dbef' : '#deebf7';
 
-/* ============================================================
-   5. STYLE DES PAYS (PAS D’EFFETS QUI DÉCALENT)
-============================================================ */
 const style = feature => {
     const val = indicator === "guns"
         ? feature.properties[gunsField]
@@ -201,11 +191,7 @@ const style = feature => {
     };
 };
 
-/* ============================================================
-   6. INTERACTIONS SANS BUG (pas de déplacement)
-============================================================ */
-
-// STYLE DE SURVOL SANS RE-CALCUL DE GEOMÉTRIE (safe)
+/* 6. INTERACTIONS SANS BUG (pas de déplacement) */
 const hoverStyle = {
     weight: 2,
     color: "#000"
@@ -247,9 +233,7 @@ function onEachFeature(feature, layer) {
     });
 }
 
-/* ============================================================
-   7. LÉGENDE
-============================================================ */
+/* 7. LÉGENDE */
 const legend = L.control({ position: "bottomright" });
 function updateLegend() {
     map.removeControl(legend);
@@ -277,18 +261,13 @@ function updateLegend() {
 }
 updateLegend();
 
-/* ============================================================
-   8. CHARGEMENT DONNÉES
-============================================================ */
 Promise.all([
     d3.json("world.geo.json"),
     d3.csv("dataset_gun_cleaned.csv"),
     d3.csv("gdp-by-country_cleaned.csv")
 ]).then(init);
 
-/* ============================================================
-   9. INITIALISATION APRÈS CHARGEMENT
-============================================================ */
+/* 9. INITIALISATION APRÈS CHARGEMENT */
 function init([geo, guns, gdp]) {
 
     worldData = geo;
