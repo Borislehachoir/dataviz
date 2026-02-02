@@ -16,8 +16,8 @@
 
 <body>
     <div id="intro-scene">
-        <div class="gun-icon" id="gun1"> <img src="gun.png" alt="gun-icon"></div>
-        <div class="gun-icon" id="gun2"><img src="gun.png" alt="gun-icon"></div>
+        <div class="gun-icon" id="gun1"> <img src="gun.png" alt="gun_icon"></div>
+        <div class="gun-icon" id="gun2"><img src="gun.png" alt="gun_icon"></div>
         <div class="bullet-icon" id="bullet1"></div>
         <div class="bullet-icon" id="bullet2"></div>
     </div>
@@ -38,8 +38,6 @@
             <ul>
                 <li><a href="#contexte">Bref contexte</a></li>
                 <li><a href="#graphiques">Quelques graphiques</a></li>
-                <li><a href="#carte-pib">Carte interactive</a></li>
-                <li><a href="#apropos">A propos du site</a></li>
             </ul>
         </nav>
     </header>
@@ -47,7 +45,7 @@
     <main>
         <section>
             <h1 class="at-item" id="contexte">Bref contexte</h1>
-            <div class ="explications">
+            <div class="explications">
                 <p> A la racine de ce projet, il y a une question. Quel lien peut-on faire entre les statistiques liées
                     aux armes à feu, et le PIB d'un Etat ?
                     Est-ce qu'être un état développé comme la France ou les Etats-Unis implique toujours que votre pays
@@ -66,7 +64,7 @@
                 que les armes causent.
                 En parlant de cela, je tenais à noter que ces données ne s'intéressant principalement qu'aux armes à
                 feu, on pourrait se méprendre sur certaines réalités.
-                Par exemple, on pourrait croire que la Corée du Sud a un taux de suicide de 0,04, mais c'est une
+                Par exemple, on pourrait croire que la Corée du Sud a un taux de suicide de 0,04 pour 100 000 habitants, mais c'est une
                 méprise, parce que c'est un taux de suicide <span style="font-style: italic;">seulement par arme à
                     feu</span>.
                 La Corée du Sud, si on considère le taux de suicide avec toutes les méthodes employées, grimpe à
@@ -75,8 +73,8 @@
                 <span style="font-style: italic; color:#ff3643;">29 personnes pour 100 000 habitants</span>.
                 </p>
             </div>
-
         </section>
+
         <h1 class="at-item" id="graphiques">Quelques graphiques...</h1>
         <div class="graph-stack">
             <div id="chartBest" class="chart-box"></div>
@@ -86,35 +84,33 @@
 
         <h1 class="at-item" id="carte-pib">Carte Interactive : Possession d'armes et PIB</h1>
 
-        <!-- TIMELINE -->
         <div style="margin-left:4rem;">
-            <p style="display:inline; margin-right:10px; color: white;">Evolution du PIB :</p>
-            <button id="playTimeline">▶️ Lecture</button>
-            <button id="pauseTimeline">⏸️ Pause</button>
+            <p style=" font-size:1.1rem;  font-weight: bold;  display:inline; margin-right:10px; color: white;">Evolution du PIB :</p>
+            <button id="playTimeline" class="neon">▶️ Lecture</button>
+            <button id="pauseTimeline" class="neon">⏸️ Pause</button>
 
             <input type="range" id="timelineSlider" min="0" max="0" value="0" style="width:300px; margin-left:10px;">
             <span id="timelineYear" style="font-weight:bold; margin-left:10px; color: white;"></span>
         </div>
 
-        <!-- CHOIX INDICATEURS -->
         <div style="margin-left:4rem; ">
-            <label for="indicator">Indicateur principal : </label>
-            <select id="indicator">
+            <label for="indicator" >Indicateur principal : </label>
+            <select id="indicator" class="neon-2" >
                 <option value="guns">Armes à feu</option>
                 <option value="gdp">PIB</option>
             </select>
 
-            <label for="gunsField">Variable armes : </label>
-            <select id="gunsField">
-                <option value="Estimate of civilian firearms per 100 persons">Armes / 100 personnes</option>
-                <option value="Registered firearms">Armes enregistrées</option>
-                <option value="Unregistered firearms">Armes non enregistrées</option>
-                <option value="Gun Death Rate">Taux mortalité armes</option>
-                <option value="Suicide Rate by Firearm">Suicides par arme</option>
+            <label for="gunsField" >Variable armes : </label>
+            <select id="gunsField" class="neon-2">
+                <option value="Estimate of civilian firearms per 100 persons">Armes pour 100 personnes</option>
+                <option value="Registered firearms">Armes enregistrées par pays</option>
+                <option value="Unregistered firearms">Armes non enregistrées par pays</option>
+                <option value="Gun Death Rate">Taux mortalité armes par pays</option>
+                <option value="Suicide Rate by Firearm">Suicides par arme à feu par pays</option>
             </select>
 
-            <label for="gdpYear">Année PIB : </label>
-            <select id="gdpYear"></select>
+            <label for="gdpYear" >Année PIB : </label>
+            <select id="gdpYear"class="neon-2"></select>
         </div>
 
         <div id="map"></div>
@@ -169,7 +165,7 @@
                 const chart = echarts.init(chartElement);
 
                 chart.setOption({
-                    title: { text: title, left: 'center' },
+                    title: { text: title, left: 10 },
                     grid: { left: 60, right: 60, top: 60, bottom: 60 },
                     legend: { data: ['PIB (US$)', 'Taux décès / 100k'], bottom: 10 },
                     tooltip: {
@@ -207,7 +203,7 @@
                 const chart = echarts.init(chartElement);
 
                 chart.setOption({
-                    title: { text: title, left: 'center' },
+                    title: { text: title, left: 10 },
                     grid: { left: 60, right: 40, top: 60, bottom: 60 },
                     xAxis: { type: 'category', data: countries },
                     yAxis: { type: 'value', name: 'Ratio PIB/Taux', axisLabel: { formatter: val => formatMoney(val) } },
@@ -224,10 +220,10 @@
                 });
             }
 
-            // --- Initialisation des 3 graphiques (garantie d'exécution après le chargement du DOM) ---
+            // --- Initialisation des 3 graphiques ---
             createBarLineChart(
                 'chartBest',
-                'Top 10 Meilleurs Pays — PIB vs Taux de décès',
+                'Top 10 Pays avec le meilleur rapport PIB vs Taux de décès',
                 DATA.best.countries,
                 DATA.best.gdp,
                 DATA.best.rate,
@@ -236,7 +232,7 @@
 
             createBarLineChart(
                 'chartWorst',
-                'Top 10 Pires Pays — PIB vs Taux de décès',
+                'Top 10 Pays avec le pire rapport PIB vs Taux de décès',
                 DATA.worst.countries,
                 DATA.worst.gdp,
                 DATA.worst.rate,
@@ -245,7 +241,7 @@
 
             createRatioChart(
                 'chartRatioBest',
-                'Top 10 Meilleurs — Ratio PIB / Taux',
+                'Dix meilleurs ratios PIB / Taux de décès',
                 DATA.best.countries,
                 DATA.best.ratio
             );
@@ -271,7 +267,6 @@
         window.dispatchEvent(new Event('resize'));
     </script>
     <script src="intro.js"></script>
-    <script src="bubbles.js"></script>
 </body>
 
 </html>

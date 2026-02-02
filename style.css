@@ -2,86 +2,90 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   min-height: 150vh;
-  font-family:Georgia, 'Times New Roman', Times, serif;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 body {
-    display: flex;
-    flex-direction: column;
-    min-height: 200vh;
-    margin: 0;
-    background-color: #001d3d;
-    box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-height: 200vh;
+  margin: 0;
+  background-color: #001d3d;
+  box-sizing: border-box;
 }
 
 /* Styles pour la scène d'introduction */
 
 #intro-scene {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #f0f0f0;
-    z-index: 1150;
-    overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #f0f0f0;
+  z-index: 1150;
+  overflow: hidden;
 }
+
 .gun-icon {
-    font-size: 8em;
-    position: absolute;
-    transition: none;
-    
+  font-size: 8em;
+  position: absolute;
+  transition: none;
+
 }
 
 #gun1 {
-    top: 45%;
-    left: 15%;
-    z-index: 1200;
+  top: 45%;
+  left: 15%;
+  z-index: 1200;
 }
 
 #gun2 {
-    top: 30%;
-    right: 20%;
-    transform: scaleX(-1);
-    z-index: 1200;
+  top: 30%;
+  right: 20%;
+  transform: scaleX(-1);
+  z-index: 1200;
 }
 
 .bullet-icon {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background-color: black; 
-    border-radius: 50%;
-    opacity: 0;
-    transition: none;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: black;
+  border-radius: 50%;
+  opacity: 0;
+  transition: none;
 }
 
 #bullet1 {
-    top: calc(36% + 4em); 
-    right: calc(33% + 4em);
+  top: calc(36% + 4em);
+  right: calc(37% + 4em);
 }
 
 #bullet2 {
-    top: calc(51% + 4em);
-    left: calc(30% + 4em);
+  top: calc(50% + 4em);
+  left: calc(34% + 4em);
 }
 
-header, main, footer {
-    opacity: 0;
-    transition: opacity 1s ease-out;
+header,
+main,
+footer {
+  opacity: 0;
+  transition: opacity 1s ease-out;
 }
 
 
 /* Header et menu */
 header {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    background-color: #001d3d;
-    padding-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  background-color: #001d3d;
+  padding-bottom: 10px;
 }
 
 .header-top {
@@ -114,7 +118,7 @@ header {
   font-style: italic;
   color: white;
   line-height: 1.3;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .logo img {
@@ -156,6 +160,7 @@ nav ul li a:hover {
 nav.hidden {
   display: none;
 }
+
 @media (min-width: 769px) {
   nav ul {
     flex-direction: row;
@@ -186,6 +191,7 @@ nav.hidden {
   .hamburger {
     display: block;
   }
+
   .hidden {
     display: none;
   }
@@ -197,7 +203,8 @@ nav.hidden {
 
 
 /* Graphiques */
-#main, #main2 {
+#main,
+#main2 {
   flex: 1;
   width: 100%;
   height: 600px;
@@ -210,25 +217,79 @@ nav.hidden {
   display: flex;
   flex-direction: column;
   gap: 30px;
-  align-items: center;
+  align-items: flex-start;
+  position: relative;
   width: 100%;
   padding: 0 12px;
   box-sizing: border-box;
 }
+
 .graph-stack .chart-box {
   width: 100%;
   max-width: 1100px;
   height: 420px;
   background: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   padding: 8px;
 }
-@media (max-width: 768px) {
-  .graph-stack .chart-box { height: 340px; }
+
+.neon {
+  background-color: #00308f;
+  border: 2px solid #00d8d8;
+  color: #7df9ff;
+  padding: 10px 20px;
+  margin-right: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 8px;
 }
+
+.neon:hover {
+  background-color: #7df9ff;
+  color: #00308f;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #ff0000, 0 0 20px #f5f5dc;
+  transition: all 0.3s ease;
+}
+
+.neon-2 {
+  background-color: #00308f;
+  border: 2px solid #00d8d8;
+  color: #7df9ff;
+  padding: 10px 20px;
+  margin-right: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+#gdpYear::-webkit-scrollbar {
+  width: 8px;
+}
+
+#gdpYear::-webkit-scrollbar-track {
+  background: #1a1a2e;
+}
+
+#gdpYear::-webkit-scrollbar-thumb {
+  background: #7df9ff;
+  border-radius: 4px;
+  box-shadow: 0 0 10px #7df9ff;
+}
+
+/*Media queries pour responsive design*/
+
+@media (max-width: 768px) {
+  .graph-stack .chart-box {
+    height: 340px;
+  }
+}
+
 @media (max-width: 650px) {
-  .graph-stack .chart-box { height: 300px; }
+  .graph-stack .chart-box {
+    height: 300px;
+  }
 }
 
 @media (max-width: 650px) {
@@ -243,6 +304,7 @@ h1 {
   color: white;
   text-align: center;
 }
+
 .explications {
   margin: 0 auto 30px auto;
   color: #ffffff;
@@ -253,7 +315,8 @@ h1 {
 
 label {
   margin: 10px 5px;
-  font-size: 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
   color: #fff;
 }
 
@@ -265,7 +328,7 @@ select {
 
 .graph-stack svg {
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .graph-stack path {
@@ -283,40 +346,44 @@ select {
   text-anchor: middle;
   pointer-events: none;
 }
-#legend {display: none;}
+
+#legend {
+  display: none;
+}
 
 
 /* Carte Leaflet */
 
-#map { 
-  height: 600px; 
-  width: calc(100% - 8rem); 
-  margin: 1rem auto 0; 
+#map {
+  height: 600px;
+  width: calc(100% - 8rem);
+  margin: 1rem auto 0;
   padding: 0;
 }
 
 .leaflet-interactive {
-    transition: fill 0.4s ease, stroke 0.4s ease, fill-opacity 0.4s ease;
+  transition: fill 0.4s ease, stroke 0.4s ease, fill-opacity 0.4s ease;
 }
 
-.info, .legend {
+.info,
+.legend {
   padding: 6px 8px;
   font: 14px Arial, Helvetica, sans-serif;
-  background: rgba(255,255,255,0.85);
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
 }
 
 #yearOverlay {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    background: rgba(255,255,255,0.85);
-    padding: 6px 12px;
-    border-radius: 5px;
-    font-size: 20px;
-    font-weight: bold;
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 6px 12px;
+  border-radius: 5px;
+  font-size: 20px;
+  font-weight: bold;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 
@@ -325,8 +392,9 @@ select {
 footer.piedepage {
   margin-top: 50px;
 }
+
 .piedepage {
-  background-color:#001d3d;
+  background-color: #001d3d;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -339,54 +407,58 @@ footer.piedepage {
 }
 
 
-/*animations*/ 
+/*animations*/
 /* Puff In */
 
-	.at-item {
-		
-		animation-name: puff-in-vertical;
-		animation-duration: 1s;
-		animation-timing-function: linear;
-		animation-delay: 0s;
-		animation-iteration-count: 1;
-		animation-direction: normal;
-		animation-fill-mode: none;
-	
-	}
-	@keyframes puff-in-vertical {
-			
-		0% {
-			transform:scaleY(2);
-			filter:blur(4px);
-			opacity:0;
-		}
-		100% {
-			transform:scaleY(1);
-			filter:blur(0);
-			opacity:1;
-		}
-	}
+.at-item {
 
-  /* Fade In Top Left */
-  .at-item-2 {
-		
-		animation-name: fade-in-tl;
-		animation-duration: 1s;
-		animation-timing-function: linear;
-		animation-delay: 0s;
-		animation-iteration-count: 1;
-		animation-direction: normal;
-		animation-fill-mode: none;
-			
-	}
-	@keyframes fade-in-tl {
-			
-		0% {
-			transform:translateX(-75px) translateY(-75px);
-			opacity:0;
-		}
-		100% {
-			transform:translateX(0) translateY(0);
-			opacity:1;
-		}
-	}
+  animation-name: puff-in-vertical;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-delay: 0s;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-fill-mode: none;
+
+}
+
+@keyframes puff-in-vertical {
+
+  0% {
+    transform: scaleY(2);
+    filter: blur(4px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scaleY(1);
+    filter: blur(0);
+    opacity: 1;
+  }
+}
+
+/* Fade In Top Left */
+.at-item-2 {
+
+  animation-name: fade-in-tl;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-delay: 0s;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  animation-fill-mode: none;
+
+}
+
+@keyframes fade-in-tl {
+
+  0% {
+    transform: translateX(-75px) translateY(-75px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0) translateY(0);
+    opacity: 1;
+  }
+}

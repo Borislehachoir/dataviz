@@ -9,100 +9,106 @@ document.addEventListener('DOMContentLoaded', () => {
     const main = document.querySelector('main');
     const footer = document.querySelector('footer');
 
-    const animationDuration = 1000; 
+    const animationDuration = 1000;
     const shotTrigger = 50;
-    const bulletTravel = -700; 
+    const bulletTravel = -700;
 
 
     const ANIMATION_PLAYED_KEY = 'introAnimationPlayed';
-    let isAnimationPlayed = sessionStorage.getItem(ANIMATION_PLAYED_KEY) === 'true'; 
+    let isAnimationPlayed = sessionStorage.getItem(ANIMATION_PLAYED_KEY) === 'true';
 
 
-     if (isAnimationPlayed) {
-         introScene.style.display = 'none';
+    if (isAnimationPlayed) {
+        introScene.style.display = 'none';
         header.style.opacity = '1';
-         main.style.opacity = '1';
-         footer.style.opacity = '1';
+        main.style.opacity = '1';
+        footer.style.opacity = '1';
 
         const menuNav = document.getElementById('menu');
-         const menuSeparator = document.getElementById('separator');
-         if (window.innerWidth > 768) {
-             menuNav.classList.remove('hidden');
-             menuSeparator.classList.remove('hidden'); 
-         }
-         introScene.style.zIndex = '1';
+        const menuSeparator = document.getElementById('separator');
+        if (window.innerWidth > 768) {
+            menuNav.classList.remove('hidden');
+            menuSeparator.classList.remove('hidden');
+        }
+        introScene.style.zIndex = '1';
 
         return;
-}
+    }
 
 
     window.addEventListener('scroll', () => {
 
-         if (isAnimationPlayed) {
-             return;
+        if (isAnimationPlayed) {
+            return;
         }
 
         const scrollPos = window.scrollY;
 
 
-         const progress = Math.min(scrollPos / animationDuration, 1);
+        const progress = Math.min(scrollPos / animationDuration, 1);
 
 
         if (progress <= 1) {
-           const gunOpacity = 1 - progress;
-           gun1.style.opacity = gunOpacity;
-           gun2.style.opacity = gunOpacity;
-           const translateY = -scrollPos * 0.5; 
-           introScene.style.transform = `translateY(${translateY}px)`;
-           header.style.opacity = progress;
-           main.style.opacity = progress;
-           footer.style.opacity = progress;
+            const gunOpacity = 1 - progress;
+            gun1.style.opacity = gunOpacity;
+            gun2.style.opacity = gunOpacity;
+            const translateY = -scrollPos * 0.5;
+            introScene.style.transform = `translateY(${translateY}px)`;
+            header.style.opacity = progress;
+            main.style.opacity = progress;
+            footer.style.opacity = progress;
 
-         if (progress === 1) {
-            sessionStorage.setItem(ANIMATION_PLAYED_KEY, 'true');
-            isAnimationPlayed = true; 
+            if (progress === 1) {
+                sessionStorage.setItem(ANIMATION_PLAYED_KEY, 'true');
+                isAnimationPlayed = true;
 
-            introScene.style.display = 'none'; 
-            introScene.style.zIndex = '1'; 
-            introScene.style.position = 'relative';
-            introScene.style.transform = 'none';
-            header.style.opacity = '1'; 
-            main.style.opacity = '1';
-            footer.style.opacity = '1';
-            const menuNav = document.getElementById('menu');
-            const menuSeparator = document.getElementById('separator');
+                introScene.style.display = 'none';
+                introScene.style.zIndex = '1';
+                introScene.style.position = 'relative';
+                introScene.style.transform = 'none';
+                header.style.opacity = '1';
+                main.style.opacity = '1';
+                footer.style.opacity = '1';
+                const menuNav = document.getElementById('menu');
+                const menuSeparator = document.getElementById('separator');
 
-            if (window.innerWidth > 768) {
-                  menuNav.classList.remove('hidden');
-                   menuSeparator.classList.remove('hidden'); 
-            } } 
+                if (window.innerWidth > 768) {
+                    menuNav.classList.remove('hidden');
+                    menuSeparator.classList.remove('hidden');
+                }
+            }
             else {
                 introScene.style.display = 'block';
-                introScene.style.zIndex = '1000'; }
-  }
-
-      if (scrollPos >= shotTrigger && progress < 1) { 
-          const shotProgress = Math.min((scrollPos - shotTrigger) / (animationDuration - shotTrigger), 1);
-
-         if (shotProgress > 0) {
-            const bullet1X = shotProgress * bulletTravel;
-            bullet1.style.opacity = 1;
-            bullet1.style.transform = `translateX(${bullet1X}px)`;
-            const bullet2X = shotProgress * -bulletTravel;
-            bullet2.style.opacity = 1; 
-            bullet2.style.transform = `translateX(${bullet2X}px)`;
-        } 
-        else {
-            bullet1.style.opacity = 0;
-            bullet2.style.opacity = 0;
-            bullet1.style.transform = 'none';
-            bullet2.style.transform = 'none';
+                introScene.style.zIndex = '1000';
+            }
         }
-  }
-});
+
+        if (scrollPos >= shotTrigger && progress < 1) {
+            const shotProgress = Math.min((scrollPos - shotTrigger) / (animationDuration - shotTrigger), 1);
+
+            if (shotProgress > 0) {
+                const bullet1X = shotProgress * bulletTravel;
+                bullet1.style.opacity = 1;
+                bullet1.style.transform = `translateX(${bullet1X}px)`;
+                const bullet2X = shotProgress * -bulletTravel;
+                bullet2.style.opacity = 1;
+                bullet2.style.transform = `translateX(${bullet2X}px)`;
+                const recoilProgress = Math.min(shotProgress * 5, 1);
+                const recoilRotation = recoilProgress * 10 * (1 - recoilProgress);
+                gun1.style.transform = `rotateZ(${recoilRotation}deg)`;
+                gun2.style.transform = `scaleX(-1) rotateZ(${-recoilRotation}deg)`;
+            }
+            else {
+                bullet1.style.opacity = 0;
+                bullet2.style.opacity = 0;
+                bullet1.style.transform = 'none';
+                bullet2.style.transform = 'none';
+            }
+        }
+    });
 
 
     if (window.scrollY > 0 && !isAnimationPlayed) {
         window.scrollTo(0, 0);
-  }
+    }
 });

@@ -158,12 +158,17 @@ info.addTo(map);
    4. COULEURS
 ============================================================ */
 const getColorGuns = d =>
-    d > 100 ? '#800026' :
-        d > 50 ? '#BD0026' :
-            d > 20 ? '#E31A1C' :
-                d > 10 ? '#FC4E2A' :
-                    d > 5 ? '#FD8D3C' :
-                        d > 1 ? '#FEB24C' : '#FFEDA0';
+    d > 10000000 ? "#800026" :
+    d > 1000000 ? "#b30000" :
+        d > 100000 ? "#d41a1a" :
+            d > 50 ? '#cb181d' :
+                d > 20 ? '#ef3b2c' :
+                    d > 10 ? '#fb6a4a' :
+                        d > 5 ? '#fc9272' :
+                            d > 1 ? '#fcbba1' :
+                                d > 0.5 ? '#fee0b6' :
+                                    d > 0.3 ? '#fef0d9' :
+                                        d > 0.1 ? '#fff7ec' : '#fff7ec';
 
 const getColorGDP = d =>
     d > 1e12 ? '#084594' :
@@ -178,16 +183,16 @@ const style = feature => {
         ? feature.properties[gunsField]
         : feature.properties[gdpYear];
 
-     // Vérifier si la valeur est dans les seuils actifs
-     const thresholds = indicator === "guns" ? gunThresholds : gdpThresholds;
-     const isVisible = thresholds.some(t => t.active && val >= t.min && val < t.max);
-     
-     return {
-          fillColor: indicator === "guns" ? getColorGuns(val) : getColorGDP(val),
-          color: "#222",
-          weight: 1,
-          fillOpacity: isVisible ? 0.7 : 0
-     };
+    // Vérifier si la valeur est dans les seuils actifs
+    const thresholds = indicator === "guns" ? gunThresholds : gdpThresholds;
+    const isVisible = thresholds.some(t => t.active && val >= t.min && val < t.max);
+
+    return {
+        fillColor: indicator === "guns" ? getColorGuns(val) : getColorGDP(val),
+        color: "#222",
+        weight: 1,
+        fillOpacity: isVisible ? 0.7 : 0
+    };
 };
 
 const hoverStyle = {
@@ -228,12 +233,18 @@ function onEachFeature(feature, layer) {
 
 /* 7. LÉGENDE */
 let gunThresholds = [
+    { min: 0.1, max: 0.3, active: true },
+    { min: 0.3, max: 0.5, active: true },
+    { min: 0.5, max: 1, active: true },
     { min: 1, max: 5, active: true },
     { min: 5, max: 10, active: true },
     { min: 10, max: 20, active: true },
     { min: 20, max: 50, active: true },
     { min: 50, max: 100, active: true },
-    { min: 100, max: Infinity, active: true }
+    { min: 100, max: 100000, active: true },
+    { min: 100000, max: 1000000, active: true },
+    { min: 1000000, max: 10000000, active: true },
+    { min: 10000000, max: Infinity, active: true }
 ];
 
 let gdpThresholds = [
@@ -250,40 +261,40 @@ const legend = L.control({ position: "bottomright" });
 function updateLegend() {
     map.removeControl(legend);
     legend.onAdd = function () {
-       const div = L.DomUtil.create("div", "legend");
-       const thresholds = indicator === "guns" ? gunThresholds : gdpThresholds;
-       const getColor = indicator === "guns" ? getColorGuns : getColorGDP;
+        const div = L.DomUtil.create("div", "legend");
+        const thresholds = indicator === "guns" ? gunThresholds : gdpThresholds;
+        const getColor = indicator === "guns" ? getColorGuns : getColorGDP;
 
-       thresholds.forEach(t => {
-           const label = `${t.min.toLocaleString()} – ${t.max === Infinity ? '+' : t.max.toLocaleString()}`;
-           
-           const row = document.createElement("div");
-           row.style.display = "flex";
-           row.style.alignItems = "center";
-           row.style.marginBottom = "5px";
-           row.style.cursor = "pointer";
+        thresholds.forEach(t => {
+            const label = `${t.min.toLocaleString()} – ${t.max === Infinity ? '+' : t.max.toLocaleString()}`;
 
-           const colorBox = document.createElement("span");
-           colorBox.style.display = "inline-block";
-           colorBox.style.width = "18px";
-           colorBox.style.height = "18px";
-           colorBox.style.backgroundColor = getColor(t.min + 0.1);
-           colorBox.style.marginRight = "8px";
-           colorBox.style.border = t.active ? "2px solid #000" : "2px solid #ccc";
+            const row = document.createElement("div");
+            row.style.display = "flex";
+            row.style.alignItems = "center";
+            row.style.marginBottom = "5px";
+            row.style.cursor = "pointer";
 
-           const toggleState = () => {
-              t.active = !t.active;
-              colorBox.style.border = t.active ? "2px solid #000" : "2px solid #ccc";
-              geoLayer.setStyle(style);
-           };
+            const colorBox = document.createElement("span");
+            colorBox.style.display = "inline-block";
+            colorBox.style.width = "18px";
+            colorBox.style.height = "18px";
+            colorBox.style.backgroundColor = getColor(t.min + 0.1);
+            colorBox.style.marginRight = "8px";
+            colorBox.style.border = t.active ? "2px solid #000" : "2px solid #ccc";
 
-           row.appendChild(colorBox);
-           row.appendChild(document.createTextNode(label));
-           row.addEventListener("click", toggleState);
-           div.appendChild(row);
-       });
+            const toggleState = () => {
+                t.active = !t.active;
+                colorBox.style.border = t.active ? "2px solid #000" : "2px solid #ccc";
+                geoLayer.setStyle(style);
+            };
 
-      return div;
+            row.appendChild(colorBox);
+            row.appendChild(document.createTextNode(label));
+            row.addEventListener("click", toggleState);
+            div.appendChild(row);
+        });
+
+        return div;
     };
     legend.addTo(map);
 }
