@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const main = document.querySelector('main');
     const footer = document.querySelector('footer');
 
-    const animationDuration = 5000; 
+    const animationDuration = 1000; 
     const shotTrigger = 100;
     const bulletTravel = 600; 
 
