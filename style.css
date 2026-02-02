@@ -60,13 +60,13 @@ body {
 }
 
 #bullet1 {
-    top: calc(32% + 4em); 
-    right: calc(20% + 4em);
+    top: calc(36% + 4em); 
+    right: calc(33% + 4em);
 }
 
 #bullet2 {
-    top: calc(47% + 4em);
-    left: calc(15% + 4em);
+    top: calc(51% + 4em);
+    left: calc(30% + 4em);
 }
 
 header, main, footer {
@@ -150,7 +150,7 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-  color: palegreen;
+  color: #ff3643;
 }
 
 nav.hidden {
@@ -237,18 +237,24 @@ nav.hidden {
   }
 }
 
+/* Titres, sous-titres et autres éléments textuels*/
 h1 {
   margin-bottom: 20px;
   color: white;
   text-align: center;
 }
 .explications {
-  margin-bottom: 30px;
+  margin: 0 auto 30px auto;
   color: #ffffff;
   font-size: 1.1rem;
   line-height: 1.6;
   max-width: 800px;
-  padding: 50px;
+}
+
+label {
+  margin: 10px 5px;
+  font-size: 1rem;
+  color: #fff;
 }
 
 select {
@@ -280,34 +286,38 @@ select {
 #legend {display: none;}
 
 
-
 /* Carte Leaflet */
- #map { height: 600px; width: 100%; margin-top:10px; }
 
-  .leaflet-interactive {
-      transition: fill 0.4s ease, stroke 0.4s ease, fill-opacity 0.4s ease;
-  }
+#map { 
+  height: 600px; 
+  width: calc(100% - 8rem); 
+  margin: 1rem auto 0; 
+  padding: 0;
+}
 
-  /* Styles réservés aux GRAPHIQUES (évite totalement Leaflet) */
-  .info, .legend {
-    padding: 6px 8px;
-    font: 14px Arial, Helvetica, sans-serif;
+.leaflet-interactive {
+    transition: fill 0.4s ease, stroke 0.4s ease, fill-opacity 0.4s ease;
+}
+
+.info, .legend {
+  padding: 6px 8px;
+  font: 14px Arial, Helvetica, sans-serif;
+  background: rgba(255,255,255,0.85);
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  border-radius: 5px;
+}
+
+#yearOverlay {
+    position: absolute;
+    top: 15px;
+    right: 20px;
     background: rgba(255,255,255,0.85);
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    padding: 6px 12px;
     border-radius: 5px;
-  }
-
-  #yearOverlay {
-      position: absolute;
-      top: 15px;
-      right: 20px;
-      background: rgba(255,255,255,0.85);
-      padding: 6px 12px;
-      border-radius: 5px;
-      font-size: 20px;
-      font-weight: bold;
-      box-shadow: 0 0 10px rgba(0,0,0,0.2);
-  }
+    font-size: 20px;
+    font-weight: bold;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
 
 
 /* Footer */

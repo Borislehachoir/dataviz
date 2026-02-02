@@ -10,8 +10,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const footer = document.querySelector('footer');
 
     const animationDuration = 1000; 
-    const shotTrigger = 100;
-    const bulletTravel = 600; 
+    const shotTrigger = 50;
+    const bulletTravel = -700; 
 
 
     const ANIMATION_PLAYED_KEY = 'introAnimationPlayed';

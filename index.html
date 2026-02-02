@@ -36,17 +36,17 @@
         <hr class="menu-separator hidden" id="separator">
         <nav id="menu" class="hidden">
             <ul>
-                <li><a href="index.html">Accueil</a></li>
-                <li><a href="">Quelques graphiques</a></li>
-                <li><a href="">Espace définitions</a></li>
-                <li><a href="">A propos du site</a></li>
+                <li><a href="#contexte">Bref contexte</a></li>
+                <li><a href="#graphiques">Quelques graphiques</a></li>
+                <li><a href="#carte-pib">Carte interactive</a></li>
+                <li><a href="#apropos">A propos du site</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
         <section>
-            <h1 class="at-item">Bref contexte</h1>
+            <h1 class="at-item" id="contexte">Bref contexte</h1>
             <div class ="explications">
                 <p> A la racine de ce projet, il y a une question. Quel lien peut-on faire entre les statistiques liées
                     aux armes à feu, et le PIB d'un Etat ?
@@ -70,33 +70,34 @@
                 méprise, parce que c'est un taux de suicide <span style="font-style: italic;">seulement par arme à
                     feu</span>.
                 La Corée du Sud, si on considère le taux de suicide avec toutes les méthodes employées, grimpe à
-                <span style="font-style: italic; color:#BF1A1A;">27,5 personnes pour 100 000 habitants</span>.
+                <span style="font-style: italic; color:#ff3643;">27,5 personnes pour 100 000 habitants</span>.
                 Le seul pays au dessus, le Lesotho, royaume enclavé dans l'Afrique du Sud, plafonne aux alentours de
-                <span style="font-style: italic; color:#BF1A1A;">29 personnes pour 100 000 habitants</span>.
+                <span style="font-style: italic; color:#ff3643;">29 personnes pour 100 000 habitants</span>.
                 </p>
             </div>
 
         </section>
-        <h1 class="at-item">Quelques graphiques...</h1>
+        <h1 class="at-item" id="graphiques">Quelques graphiques...</h1>
         <div class="graph-stack">
             <div id="chartBest" class="chart-box"></div>
             <div id="chartWorst" class="chart-box"></div>
             <div id="chartRatioBest" class="chart-box"></div>
         </div>
 
-        <h1 class="at-item">Carte Interactive : Possession d'armes et PIB</h1>
+        <h1 class="at-item" id="carte-pib">Carte Interactive : Possession d'armes et PIB</h1>
 
         <!-- TIMELINE -->
-        <div style="margin-top:10px;">
+        <div style="margin-left:4rem;">
+            <p style="display:inline; margin-right:10px; color: white;">Evolution du PIB :</p>
             <button id="playTimeline">▶️ Lecture</button>
             <button id="pauseTimeline">⏸️ Pause</button>
 
             <input type="range" id="timelineSlider" min="0" max="0" value="0" style="width:300px; margin-left:10px;">
-            <span id="timelineYear" style="font-weight:bold; margin-left:10px;"></span>
+            <span id="timelineYear" style="font-weight:bold; margin-left:10px; color: white;"></span>
         </div>
 
         <!-- CHOIX INDICATEURS -->
-        <div style="margin-top:10px;">
+        <div style="margin-left:4rem; ">
             <label for="indicator">Indicateur principal : </label>
             <select id="indicator">
                 <option value="guns">Armes à feu</option>
