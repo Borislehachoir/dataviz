@@ -232,6 +232,7 @@ nav.hidden {
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   padding: 8px;
+  margin: 1rem auto 0;
 }
 
 .neon {
@@ -303,6 +304,7 @@ h1 {
   margin-bottom: 20px;
   color: white;
   text-align: center;
+  font-size: 3em;
 }
 
 .explications {
@@ -419,6 +421,7 @@ footer.piedepage {
   animation-iteration-count: 1;
   animation-direction: normal;
   animation-fill-mode: none;
+  margin-top: 1.5em;
 
 }
 
