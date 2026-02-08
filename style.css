@@ -51,7 +51,7 @@ body {
 
 .modal-trigger:hover {
   background-color: #7df9ff;
-   box-shadow: 0 0 10px #ff0000, 0 0 20px #f5f5dc;
+  box-shadow: 0 0 10px #ff0000, 0 0 20px #f5f5dc;
 }
 
 .modal {
@@ -337,12 +337,14 @@ nav.hidden {
 }
 
 #timelineSlider {
-  display : none;
+  display: none;
 }
 
 #timelineYear {
-  font-weight:bold; margin-left:10px; color: white;
- font-size: larger;
+  font-weight: bold;
+  margin-left: 10px;
+  color: white;
+  font-size: larger;
 }
 
 #timelineYear:hover {
