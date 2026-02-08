@@ -12,10 +12,14 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts-gl/dist/echarts-gl.min.js"></script>
+
 </head>
 
 <body>
     <div id="intro-scene">
+        <div class="intro-text">Violences par armes à feu et PIB</div>
+        <div class="intro-text-2">Par Boris Rocchietti</div>
         <div class="gun-icon" id="gun1"> <img src="gun.png" alt="gun_icon"></div>
         <div class="gun-icon" id="gun2"><img src="gun.png" alt="gun_icon"></div>
         <div class="bullet-icon" id="bullet1"></div>
@@ -31,20 +35,63 @@
                     <p>"Celui qui a inventé le bateau a aussi inventé le naufrage"</p>
                 </div>
             </div>
-            <div class="hamburger" onclick="toggleMenu()">MENU🍋</div>
+            <div class="hamburger" onclick="toggleMenu()">☰</div>
         </div>
-        <hr class="menu-separator hidden" id="separator">
+        <hr class="menu-separator" id="separator">
         <nav id="menu" class="hidden">
             <ul>
                 <li><a href="#contexte">Bref contexte</a></li>
                 <li><a href="#graphiques">Quelques graphiques</a></li>
+                <li><a href="#carte-pib">Carte interactive </a></li>
             </ul>
         </nav>
+        <button id="openModal" class="modal-trigger">🎵</button>
     </header>
 
     <main>
         <section>
+            <div id="musicModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h1>Playlist immersive</h1>
+                    <p>Ce site s'accompagne d'une playlist pour être plus immersif.
+                        Pour arrêter la musique, appuyer à nouveau sur la même touche. Si c'est sur O, appuyez de
+                        nouveau
+                        sur O.
+                        Pour accéder aux titres, appuyer sur
+                        les touches suivantes :</p>
+                    <ul class="key-list">
+                        <li><kbd>N</kbd> _ Nobody Hurt No One -
+                            <span style="color: #d2c2c2; font-weight: bold;">Natalia Podolskaya</span> ~
+                            <span style="font-style: italic;"> 3:19</span>
+                        </li>
+                        <li><kbd>O</kbd> _ Can You Hear The Music -
+                            <span style="color: #d2c2c2; font-weight: bold;">Oppenheimer Soundtrack</span> ~
+                            <span style="font-style: italic;"> 1:50</span>
+                        </li>
+                        <li><kbd>T</kbd> _ Doom Theme ~ <span style="font-style: italic;"> 1:38</span></li>
+                        <li><kbd>U</kbd> _ Under The Same Sun -
+                            <span style="color: #d2c2c2; font-weight: bold;">Scorpions</span> ~
+                            <span style="font-style: italic;"> 4:53</span>
+                        </li>
+                        <li><kbd>W</kbd> _ News From The War -
+                            <span style="color: #d2c2c2; font-weight: bold;">Dreams We've Had</span> ~
+                            <span style="font-style: italic;"> 4:44 </span>
+                        </li>
+                        <li><kbd>A</kbd>_ Crystal Valley -
+                            <span style="color: #d2c2c2; font-weight: bold;">Daisuke Kashiwa</span> ~
+                            <span style="font-style: italic;"> 6:01</span>
+                        </li>
+                        <li><kbd>R</kbd>_ Le Jardinier Du Couvent -
+                            <span style="color: #d2c2c2; font-weight: bold;">Malicorne </span> ~
+                            <span style="font-style: italic;"> 9:03</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
             <h1 class="at-item" id="contexte">Bref contexte</h1>
+
             <div class="explications">
                 <p> A la racine de ce projet, il y a une question. Quel lien peut-on faire entre les statistiques liées
                     aux armes à feu, et le PIB d'un Etat ?
@@ -81,6 +128,15 @@
             <div id="chartBest" class="chart-box"></div>
             <div id="chartWorst" class="chart-box"></div>
             <div id="chartRatioBest" class="chart-box"></div>
+            <div class="options-neon">
+                <label for="countryFilter">Filtrer les pays : </label>
+                <select id="countryFilter" class="neon-2">
+                    <option value="top10">Top 10 PIB les plus élevés (en moyenne)</option>
+                    <option value="bottom10">Top 10 PIB les plus faibles (en moyenne)</option>
+                    <option value="random10"> <button onclick="refreshChart()">10 pays aléatoires</button></option>
+                </select>
+            </div>
+            <div id="3D" class="chart-box"></div>
         </div>
 
         <h1 class="at-item" id="carte-pib">Carte Interactive : Possession d'armes et PIB</h1>
@@ -122,8 +178,11 @@
 
     <footer class="piedepage">
         <div class="explications"> Réalisé par Boris Rocchietti ©2025</div>
+        <audio id="audioPlayer" style="display:none;"></audio>
     </footer>
     <script>
+
+
 
         function formatMoney(n) {
             if (n === null || n === undefined) return '-';
@@ -144,7 +203,7 @@
 
             const DATA = {
                 best: {
-                    countries: ['Japon', 'Roy.-U.', 'Allemagne', 'Singapour', 'Indonésie', 'Espagne', 'Pologne', 'France', 'Australie', 'Arabie Sao.'],
+                    countries: ['Japon', 'Royaume-Uni', 'Allemagne', 'Singapour', 'Indonésie', 'Espagne', 'Pologne', 'France', 'Australie', 'Arabie Saoudite'],
                     gdp: [4026210821147, 3643834188783, 4659929336891, 547386645892, 1396300098191, 1722745978335, 914696430325, 3162079073496, 1752193307380, 1237529866667],
                     rate: [0.02, 0.04, 0.08, 0.01, 0.06, 0.13, 0.08, 0.32, 0.18, 0.17]
                 },
@@ -169,17 +228,22 @@
 
                 chart.setOption({
                     title: { text: title, left: 10 },
-                    grid: { left: 100, right: 100, top: 80, bottom: 80 },
+                    grid: {
+                        left: window.innerWidth < 768 ? '10%' : 100,
+                        right: window.innerWidth < 768 ? '10%' : 100,
+                        top: 80,
+                        bottom: window.innerWidth < 768 ? 60 : 80
+                    },
                     legend: { data: ['PIB (US$)', 'Taux décès / 100k'], bottom: 10 },
                     tooltip: {
                         trigger: 'axis',
                         formatter: params => {
                             const i = params[0].dataIndex;
                             return `
-            <b>${countries[i]}</b><br>
-            ${params[0].marker} PIB : ${formatMoney(gdp[i])}<br>
-            ${params[1].marker} Taux : ${rates[i]}
-            `;
+                                <b>${countries[i]}</b><br>
+                                ${params[0].marker} PIB : ${formatMoney(gdp[i])}<br>
+                                ${params[1].marker} Taux : ${rates[i]}
+                                `;
                         }
                     },
                     xAxis: {
@@ -267,7 +331,8 @@
                         trigger: 'axis',
                         formatter: params => {
                             const i = params[0].dataIndex;
-                            return `<b>${countries[i]}</b><br>Ratio : <b>${formatMoney(ratios[i])}</b>`;
+                            return `<b>${countries[i]}</b>
+                            <br>Ratio : <b>${formatMoney(ratios[i])}</b>`;
                         }
                     },
                     series: [
@@ -303,7 +368,162 @@
             );
         });
 
-        // Fonction Hamburger
+        /*Musique*/
+
+        var modal = document.getElementById("musicModal");
+        var btn = document.getElementById("openModal");
+        var span = document.getElementsByClassName("close")[0];
+
+
+        btn.onclick = function () {
+            modal.style.display = "block";
+        }
+
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        var n = true;
+        var o = true;
+        var t = true;
+        var u = true;
+        var w = true;
+        var a = true;
+        var r = true;
+
+        var player = document.getElementById('audioPlayer');
+
+        $(document).keyup(function (e) {
+            console.log("One of the keys is up");
+            var code = e.keyCode || e.which;
+            var pressedChar = String.fromCharCode(code).toLowerCase();
+            switch (pressedChar) {
+
+                case 'n':
+                    if (n) {
+                        player.setAttribute("src", "assets/nobodyhurt.mp3");
+                        player.play();
+                        n = false;
+                    } else {
+                        player.pause();
+                        n = true;
+                    }
+                    break;
+
+                case 'o':
+                    if (o) {
+                        player.setAttribute("src", "assets/oppenheimer.mp3");
+                        player.play();
+                        o = false;
+                    } else {
+                        player.pause();
+                        o = true;
+                    }
+                    break;
+
+                case 't':
+                    if (t) {
+                        player.setAttribute("src", "assets/doomtheme.mp3");
+                        player.play();
+                        t = false;
+                    } else {
+                        player.pause();
+                        t = true;
+                    }
+                    break;
+
+                case 'u':
+                    if (u) {
+                        player.setAttribute("src", "assets/underthesamesun.mp3");
+                        player.play();
+                        u = false;
+                    } else {
+                        player.pause();
+                        u = true;
+                    }
+                    break;
+
+                case 'w':
+                    if (w) {
+                        player.setAttribute("src", "assets/newsfromthewar.mp3");
+                        player.play();
+                        w = false;
+                    } else {
+                        player.pause();
+                        w = true;
+                    }
+                    break;
+
+                case 'a':
+                    if (a) {
+                        player.setAttribute("src", "assets/crystalvalley.mp3");
+                        player.play();
+                        a = false;
+                    } else {
+                        player.pause();
+                        a = true;
+                    }
+                    break;
+
+                case 'r':
+                    if (r) {
+                        player.setAttribute("src", "assets/jardinier.mp3");
+                        player.play();
+                        r = false;
+                    } else {
+                        player.pause();
+                        r = true;
+                    }
+                    break;
+            }
+        });
+
+        var lastSong = null;
+
+        player.addEventListener('ended', function () {
+            var keys = ['n', 'o', 't', 'u', 'w', 'a', 'r'];
+
+            var song;
+
+            do {
+                song = keys[Math.floor(Math.random() * keys.length)];
+            } while (song === lastSong && keys.length > 1);
+
+            lastSong = song;
+
+            var titles = {
+                'n': 'assets/nobodyhurt.mp3',
+                'o': 'assets/oppenheimer.mp3',
+                't': 'assets/doomtheme.mp3',
+                'u': 'assets/underthesamesun.mp3',
+                'w': 'assets/newsfromthewar.mp3',
+                'a': 'assets/crystalvalley.mp3',
+                'r': 'assets/jardinier.mp3'
+            };
+
+            player.setAttribute("src", titles[song]);
+            player.play();
+
+            switch (song) {
+                case 'n': n = false; break;
+                case 'o': o = false; break;
+                case 't': t = false; break;
+                case 'u': u = false; break;
+                case 'w': w = false; break;
+                case 'a': a = false; break;
+                case 'r': r = false; break;
+            }
+
+            console.log("Morceau suivant : " + song.toUpperCase());
+        });
+
+         // Fonction Hamburger
         function toggleMenu() {
             const menu = document.getElementById("menu");
             const separator = document.getElementById("separator");
@@ -323,6 +543,7 @@
         window.dispatchEvent(new Event('resize'));
     </script>
     <script src="intro.js"></script>
+    <script src="3d.js"></script>
 </body>
 
 </html>

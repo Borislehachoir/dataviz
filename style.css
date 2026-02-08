@@ -18,6 +18,125 @@ body {
   box-sizing: border-box;
 }
 
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a2e;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #7df9ff;
+  border-radius: 4px;
+  box-shadow: 0 0 10px #7df9ff;
+
+}
+
+/*Styles pour la modale musicale */
+
+.modal-trigger {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 60px;
+  height: 60px;
+  background: #7df9ff;
+  border: none;
+  border-radius: 50%;
+  font-size: 28px;
+  z-index: 1500;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.modal-trigger:hover {
+  background-color: #519a9e;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100% - 2em;
+  backdrop-filter: blur(5px);
+}
+
+.modal-content {
+  background: #001d3d;
+  margin: 5% auto;
+  padding: 20px;
+  border: 2px solid #00d8d8;
+  border-radius: 15px;
+  width: 80%;
+  max-width: 500px;
+  color: white;
+  box-shadow: 0 10px 40px rgba(0, 216, 216, 0.3);
+  animation: slideDown 0.4s ease;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Bouton de fermeture */
+.close {
+  color: #7df9ff;
+  float: right;
+  font-size: 35px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close:hover,
+.close:focus {
+  color: #ff3643;
+}
+
+.modal-content h1 {
+  color: rgb(255, 223, 223);
+  font-size: 2em;
+  margin-top: 0;
+  text-align: center;
+}
+
+.modal-content p {
+  font-size: 1em;
+  line-height: 1.4;
+  margin-bottom: 20px;
+}
+
+/* Liste des touches */
+.key-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.key-list li {
+  padding: 12px;
+  margin: 10px 0;
+  background: #003874;
+  border-left: 4px solid #00d8d8;
+  border-radius: 5px;
+  font-size: 1.1em;
+}
+
+.key-list li:hover {
+  background: #0061c3;
+}
+
 /* Styles pour la scène d'introduction */
 
 #intro-scene {
@@ -29,6 +148,39 @@ body {
   background-color: #f0f0f0;
   z-index: 1150;
   overflow: hidden;
+}
+
+.intro-text {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2.2em;
+  font-weight: bold;
+  color: #001d3d;
+  z-index: 1201;
+  animation: glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 20px #fff, 0 0 40px #001d3d, 0 0 60px #001d3d, 0 0 70px #001d3d;
+  }
+
+  to {
+    text-shadow: 0 0 20px #fff, 0 0 40px #ff3643, 0 0 60px #ff3643, 0 0 70px #ff3643;
+  }
+}
+
+.intro-text-2 {
+  position: absolute;
+  top: 23%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1em;
+  font-style: italic;
+  color: #001d3d;
+  z-index: 1201;
 }
 
 .gun-icon {
@@ -161,17 +313,6 @@ nav.hidden {
   display: none;
 }
 
-@media (min-width: 769px) {
-  nav ul {
-    flex-direction: row;
-    justify-content: flex-start;
-  }
-
-  nav.hidden {
-    display: block !important;
-  }
-}
-
 .hamburger {
   display: none;
   font-size: 30px;
@@ -182,25 +323,6 @@ nav.hidden {
 .hamburger:hover {
   color: palegreen;
 }
-
-@media (max-width: 768px) {
-  nav {
-    display: none;
-  }
-
-  .hamburger {
-    display: block;
-  }
-
-  .hidden {
-    display: none;
-  }
-
-  nav.hidden {
-    display: block;
-  }
-}
-
 
 /* Graphiques */
 #main,
@@ -226,13 +348,21 @@ nav.hidden {
 
 .graph-stack .chart-box {
   width: 100%;
-  max-width: 1100px;
+  max-width: 900px;
   height: 420px;
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   padding: 8px;
   margin: 1rem auto 0;
+}
+
+.options-neon {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-left: 12em;
+  margin-bottom: 1rem;
 }
 
 .neon {
@@ -277,26 +407,6 @@ nav.hidden {
   background: #7df9ff;
   border-radius: 4px;
   box-shadow: 0 0 10px #7df9ff;
-}
-
-/*Media queries pour responsive design*/
-
-@media (max-width: 768px) {
-  .graph-stack .chart-box {
-    height: 340px;
-  }
-}
-
-@media (max-width: 650px) {
-  .graph-stack .chart-box {
-    height: 300px;
-  }
-}
-
-@media (max-width: 650px) {
-  h1 {
-    font-size: 1.5em;
-  }
 }
 
 /* Titres, sous-titres et autres éléments textuels*/
@@ -386,6 +496,7 @@ select {
   font-size: 20px;
   font-weight: bold;
   box-shadow: 0 0 10px #00000033;
+  display: none;
 }
 
 
@@ -404,13 +515,12 @@ footer.piedepage {
   min-height: 5%;
   position: relative;
   bottom: 0;
-  padding: 20px 0;
+  padding: 10px 0;
   z-index: 1100;
 }
 
 
-/*animations*/
-/* Puff In */
+/*animations de texte*/
 
 .at-item {
 
@@ -440,7 +550,6 @@ footer.piedepage {
   }
 }
 
-/* Fade In Top Left */
 .at-item-2 {
 
   animation-name: fade-in-tl;
@@ -463,5 +572,128 @@ footer.piedepage {
   100% {
     transform: translateX(0) translateY(0);
     opacity: 1;
+  }
+}
+
+
+/*Media queries*/
+
+@media (max-width: 1100px) {
+  .options-neon {
+    margin-left: 1em;
+  }
+}
+
+@media (max-width: 1025px) {
+
+
+  .gun-icon {
+    font-size: 4em;
+    position: absolute;
+    transition: none;
+
+  }
+
+  #gun1 {
+    top: 45%;
+    left: 8%;
+    z-index: 1200;
+  }
+
+  #gun2 {
+    top: 30%;
+    right: 12%;
+    transform: scaleX(-1);
+    z-index: 1200;
+  }
+
+  nav ul {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+
+  nav.hidden {
+    display: block !important;
+  }
+
+  nav {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  nav.hidden {
+    display: block;
+  }
+
+  .graph-stack .chart-box {
+    height: 340px;
+  }
+
+  #chartBest,
+  #chartWorst,
+  #chartRatioBest {
+    padding: 15px !important;
+  }
+
+  h1 {
+    font-size: 1.5em;
+  }
+
+  .piedepage {
+    height: 3%;
+  }
+}
+
+/*Tablette */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 90%;
+    padding: 20px;
+    margin: 20% auto;
+  }
+
+  .modal-content h1 {
+    font-size: 1.5em;
+  }
+
+  .modal-trigger {
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    bottom: 20px;
+    right: 20px;
+    display: block !important;
+    visibility: visible !important;
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 650px) {
+
+  .graph-stack .chart-box {
+    height: 340px;
+    padding: 12px !important;
+  }
+
+  label {
+    font-size: 0.95rem;
+    margin: 5px 3px;
+  }
+
+  select {
+    font-size: 0.9rem;
+    padding: 4px 8px;
+  }
+
+  h1 {
+    font-size: 1.8em;
   }
 }
