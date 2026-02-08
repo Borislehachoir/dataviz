@@ -126,12 +126,12 @@ body {
 }
 
 .key-list li {
-  padding: 12px;
+  padding: 8px;
   margin: 10px 0;
   background: #003874;
   border-left: 4px solid #00d8d8;
   border-radius: 5px;
-  font-size: 1.1em;
+  font-size: 0.9em;
 }
 
 .key-list li:hover {
