@@ -302,7 +302,7 @@ nav.hidden {
 /* Titres, sous-titres et autres éléments textuels*/
 h1 {
   margin-bottom: 20px;
-  color: white;
+  color: rgb(255, 223, 223);
   text-align: center;
   font-size: 3em;
 }
@@ -371,7 +371,7 @@ select {
 .legend {
   padding: 6px 8px;
   font: 14px Arial, Helvetica, sans-serif;
-  background: rgba(255, 255, 255, 0.85);
+  background: #ffffffd9;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
 }
@@ -380,12 +380,12 @@ select {
   position: absolute;
   top: 15px;
   right: 20px;
-  background: rgba(255, 255, 255, 0.85);
+  background: #ffffffd9;
   padding: 6px 12px;
   border-radius: 5px;
   font-size: 20px;
   font-weight: bold;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 10px #00000033;
 }
 
 

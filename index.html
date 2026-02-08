@@ -64,7 +64,8 @@
                 que les armes causent.
                 En parlant de cela, je tenais à noter que ces données ne s'intéressant principalement qu'aux armes à
                 feu, on pourrait se méprendre sur certaines réalités.
-                Par exemple, on pourrait croire que la Corée du Sud a un taux de suicide de 0,04 pour 100 000 habitants, mais c'est une
+                Par exemple, on pourrait croire que la Corée du Sud a un taux de suicide de 0,04 pour 100 000 habitants,
+                mais c'est une
                 méprise, parce que c'est un taux de suicide <span style="font-style: italic;">seulement par arme à
                     feu</span>.
                 La Corée du Sud, si on considère le taux de suicide avec toutes les méthodes employées, grimpe à
@@ -85,7 +86,8 @@
         <h1 class="at-item" id="carte-pib">Carte Interactive : Possession d'armes et PIB</h1>
 
         <div style="margin-left:4rem;">
-            <p style=" font-size:1.1rem;  font-weight: bold;  display:inline; margin-right:10px; color: white;">Evolution du PIB :</p>
+            <p style=" font-size:1.1rem;  font-weight: bold;  display:inline; margin-right:10px; color: white;">
+                Evolution du PIB :</p>
             <button id="playTimeline" class="neon">▶️ Lecture</button>
             <button id="pauseTimeline" class="neon">⏸️ Pause</button>
 
@@ -94,13 +96,13 @@
         </div>
 
         <div style="margin-left:4rem; ">
-            <label for="indicator" >Indicateur principal : </label>
-            <select id="indicator" class="neon-2" >
+            <label for="indicator">Indicateur principal : </label>
+            <select id="indicator" class="neon-2">
                 <option value="guns">Armes à feu</option>
                 <option value="gdp">PIB</option>
             </select>
 
-            <label for="gunsField" >Variable armes : </label>
+            <label for="gunsField">Variable armes : </label>
             <select id="gunsField" class="neon-2">
                 <option value="Estimate of civilian firearms per 100 persons">Armes pour 100 personnes</option>
                 <option value="Registered firearms">Armes enregistrées par pays</option>
@@ -109,8 +111,8 @@
                 <option value="Suicide Rate by Firearm">Suicides par arme à feu par pays</option>
             </select>
 
-            <label for="gdpYear" >Année PIB : </label>
-            <select id="gdpYear"class="neon-2"></select>
+            <label for="gdpYear">Année PIB : </label>
+            <select id="gdpYear" class="neon-2"></select>
         </div>
 
         <div id="map"></div>
@@ -156,6 +158,7 @@
             DATA.best.ratio = DATA.best.gdp.map((g, i) => g / DATA.best.rate[i]);
             DATA.worst.ratio = DATA.worst.gdp.map((g, i) => g / DATA.worst.rate[i]);
 
+
             function createBarLineChart(domId, title, countries, gdp, rates, rateMax) {
                 const chartElement = document.getElementById(domId);
                 if (!chartElement) {
@@ -166,29 +169,82 @@
 
                 chart.setOption({
                     title: { text: title, left: 10 },
-                    grid: { left: 60, right: 60, top: 60, bottom: 60 },
+                    grid: { left: 100, right: 100, top: 80, bottom: 80 },
                     legend: { data: ['PIB (US$)', 'Taux décès / 100k'], bottom: 10 },
                     tooltip: {
                         trigger: 'axis',
                         formatter: params => {
                             const i = params[0].dataIndex;
                             return `
-                        <b>${countries[i]}</b><br>
-                        ${params[0].marker} PIB : ${formatMoney(gdp[i])}<br>
-                        ${params[1].marker} Taux : ${rates[i]}
-                        `;
+            <b>${countries[i]}</b><br>
+            ${params[0].marker} PIB : ${formatMoney(gdp[i])}<br>
+            ${params[1].marker} Taux : ${rates[i]}
+            `;
                         }
                     },
-                    xAxis: { type: 'category', data: countries },
+                    xAxis: {
+                        type: 'category',
+                        data: countries,
+                        axisLabel: {
+                            rotate: 15,
+                            fontSize: 11
+                        }
+                    },
                     yAxis: [
-                        { type: 'value', name: 'PIB', axisLabel: { formatter: val => formatMoney(val) } },
-                        { type: 'value', name: 'Taux décès ( en %)', min: 0, max: rateMax }
+                        {
+                            type: 'value',
+                            name: 'PIB (US$)',
+                            position: 'left',
+                            nameTextStyle: {
+                                color: '#001d3d',
+                                fontWeight: 'bold'
+                            },
+                            axisLabel: {
+                                formatter: val => formatMoney(val),
+                                color: '#001d3d'
+                            },
+                            axisLine: {
+                                show: true,
+                                lineStyle: { color: '#001d3d' }
+                            },
+                            splitLine: { show: false }
+                        },
+                        {
+                            type: 'value',
+                            name: 'Taux décès / 100k',
+                            position: 'right',
+                            min: 0,
+                            max: rateMax,
+                            nameTextStyle: {
+                                color: '#ff3643',
+                                fontWeight: 'bold'
+                            },
+                            axisLabel: {
+                                color: '#ff3643'
+                            },
+                            axisLine: {
+                                show: true,
+                                lineStyle: { color: '#ff3643' }
+                            },
+                            splitLine: { show: false }
+                        }
                     ],
                     series: [
-                        { name: 'PIB (US$)', type: 'bar', data: gdp, itemStyle: { color: '#4066FF' }, barMaxWidth: 40 },
                         {
-                            name: 'Taux décès / 100k', type: 'line', yAxisIndex: 1, data: rates,
-                            itemStyle: { color: '#6CBF00' }, lineStyle: { width: 2 }, symbolSize: 7
+                            name: 'PIB (US$)',
+                            type: 'bar',
+                            data: gdp,
+                            itemStyle: { color: '#001d3d' },
+                            barMaxWidth: 40
+                        },
+                        {
+                            name: 'Taux décès / 100k',
+                            type: 'line',
+                            yAxisIndex: 1,
+                            data: rates,
+                            itemStyle: { color: '#ff3643' },
+                            lineStyle: { width: 3, color: '#ff3643' },
+                            symbolSize: 10
                         }
                     ]
                 });
@@ -204,9 +260,9 @@
 
                 chart.setOption({
                     title: { text: title, left: 10 },
-                    grid: { left: 60, right: 40, top: 60, bottom: 60 },
+                    grid: { left: 80, right: 80, top: 80, bottom: 80 },
                     xAxis: { type: 'category', data: countries },
-                    yAxis: { type: 'value', name: 'Ratio PIB/Taux', axisLabel: { formatter: val => formatMoney(val) } },
+                    yAxis: { type: 'value', name: 'Ratio PIB/Taux', nameTextStyle: { fontWeight: 'bold' }, axisLabel: { formatter: val => formatMoney(val) }, axisLine: { lineStyle: { color: '#001d3d' } }, splitLine: { show: false } },
                     tooltip: {
                         trigger: 'axis',
                         formatter: params => {
@@ -215,7 +271,7 @@
                         }
                     },
                     series: [
-                        { type: 'bar', data: ratios, itemStyle: { color: '#9155FD' }, barMaxWidth: 40 }
+                        { type: 'bar', data: ratios, itemStyle: { color: '#001d3d' }, barMaxWidth: 40, }
                     ]
                 });
             }
