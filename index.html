@@ -49,8 +49,7 @@
     </header>
 
     <main>
-        <section>
-            <div id="musicModal" class="modal">
+        <div id="musicModal" class="modal">
                 <div class="modal-content">
                     <span class="close">&times;</span>
                     <h1>Playlist immersive</h1>
@@ -96,6 +95,8 @@
                     </div>
                 </div>
             </div>
+        <section>
+            
 
             <h1 class="at-item" id="contexte">Bref contexte</h1>
 
@@ -381,17 +382,20 @@ var modal = document.getElementById("musicModal");
 var btn = document.getElementById("openModal");
 var span = document.getElementsByClassName("close")[0];
 
+// Ajouter la classe hidden au départ
+modal.classList.add('hidden-modal');
+
 btn.onclick = function () {
-    modal.style.display = "block";
+    modal.classList.remove('hidden-modal'); // Enlever la classe pour montrer
 }
 
 span.onclick = function () {
-    modal.style.display = "none";
+    modal.classList.add('hidden-modal'); // Ajouter la classe pour cacher
 }
 
 window.onclick = function (event) {
     if (event.target == modal) {
-        modal.style.display = "none";
+        modal.classList.add('hidden-modal'); // Ajouter la classe pour cacher
     }
 }
 

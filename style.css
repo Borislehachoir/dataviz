@@ -32,6 +32,7 @@ body {
   box-shadow: 0 0 10px #7df9ff;
 
 }
+/*Styles pour la modale musicale */
 
 /*Styles pour la modale musicale */
 
@@ -47,6 +48,7 @@ body {
   font-size: 28px;
   z-index: 1500;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
 }
 
 .modal-trigger:hover {
@@ -54,28 +56,45 @@ body {
   box-shadow: 0 0 10px #ff0000, 0 0 20px #f5f5dc;
 }
 
+/* IMPORTANT : utiliser une classe pour cacher/montrer */
 .modal {
-  display: none;
   position: fixed;
   z-index: 2000;
   left: 0;
   top: 0;
   width: 100%;
-  height: 100% - 2em;
+  height: 100vh;
   backdrop-filter: blur(5px);
+  background-color: rgba(0, 0, 0, 0.5);
+  
+  /* Centrage avec Flexbox */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+/* Classe pour cacher la modale */
+.modal.hidden-modal {
+  display: none;
 }
 
 .modal-content {
   background: #001d3d;
-  margin: 5% auto;
   padding: 20px;
   border: 2px solid #00d8d8;
   border-radius: 15px;
-  width: 80%;
+  width: 100%;
   max-width: 500px;
+  max-height: 90vh;
   color: white;
   box-shadow: 0 10px 40px rgba(0, 216, 216, 0.3);
   animation: slideDown 0.4s ease;
+  
+  /* Flexbox pour le contenu interne */
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
 }
 
 @keyframes slideDown {
@@ -83,7 +102,6 @@ body {
     transform: translateY(-100px);
     opacity: 0;
   }
-
   to {
     transform: translateY(0);
     opacity: 1;
@@ -93,11 +111,13 @@ body {
 /* Bouton de fermeture */
 .close {
   color: #7df9ff;
-  float: right;
+  align-self: flex-end;
   font-size: 35px;
   font-weight: bold;
   cursor: pointer;
   transition: color 0.3s ease;
+  line-height: 1;
+  margin-bottom: 10px;
 }
 
 .close:hover,
@@ -108,36 +128,65 @@ body {
 .modal-content h1 {
   color: rgb(255, 223, 223);
   font-size: 2em;
-  margin-top: 0;
+  margin: 0 0 15px 0;
   text-align: center;
+  flex-shrink: 0;
 }
 
 .modal-content p {
   font-size: 1em;
   line-height: 1.4;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+  flex-shrink: 0;
 }
 
-/* Liste des touches */
+/* Conteneur audio avec flex */
+.audio-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 15px 0;
+  flex-shrink: 0;
+}
+
+#modalAudioPlayer {
+  width: 100%;
+  max-width: 400px;
+  height: 45px;
+}
+
+#nowPlaying {
+  margin-top: 10px;
+  color: #7df9ff;
+  font-style: italic;
+  text-align: center;
+}
+
 .key-list {
   list-style: none;
   padding: 0;
-  margin: 20px 0;
+  margin: 15px 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-grow: 1;
+  overflow-y: auto;
 }
 
 .key-list li {
-  padding: 8px;
-  margin: 10px 0;
+  padding: 12px;
   background: #003874;
   border-left: 4px solid #00d8d8;
   border-radius: 5px;
   font-size: 0.9em;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  flex-shrink: 0;
 }
 
 .key-list li:hover {
   background: #0061c3;
 }
-
 /* Styles pour la scène d'introduction */
 
 #intro-scene {
@@ -665,40 +714,13 @@ footer.piedepage {
     padding: 15px !important;
   }
 
-  h1 {
-    font-size: 1.5em;
-  }
-
   .piedepage {
     height: 3%;
   }
 }
 
-/*Tablette */
-@media (max-width: 768px) {
-  .modal-content {
-    width: 90%;
-    padding: 20px;
-    margin: 20% auto;
-  }
-
-  .modal-content h1 {
-    font-size: 1.5em;
-  }
-
-  .modal-trigger {
-    width: 50px;
-    height: 50px;
-    font-size: 24px;
-    bottom: 20px;
-    right: 20px;
-    display: block !important;
-    visibility: visible !important;
-  }
-}
 
 /* Mobile */
-
 @media (max-width: 650px) {
 
   .graph-stack .chart-box {
@@ -715,8 +737,73 @@ footer.piedepage {
     font-size: 0.9rem;
     padding: 4px 8px;
   }
+}
 
-  h1 {
-    font-size: 1.8em;
+
+/* Media queries avec Flexbox */
+@media (max-width: 768px) {
+  .modal {
+    padding: 10px;
+  }
+
+  .modal-content {
+    max-height: 88vh;
+    padding: 18px;
+    width: 95%;
+  }
+
+  .modal-content h1 {
+    font-size: 1.6em;
+    margin-bottom: 12px;
+  }
+
+  .modal-content p {
+    font-size: 1em;
+    line-height: 1.5;
+  }
+
+  #modalAudioPlayer {
+    height: 55px;
+  }
+
+  .key-list li {
+    padding: 12px;
+    font-size: 0.95em;
+  }
+}
+
+@media (max-width: 500px) {
+  .modal {
+    padding: 5px;
+    max-height: 19em;
+    width: 98%;
+  }
+
+  .modal-content {
+    padding: 15px;
+  }
+
+  .modal-content h1 {
+    font-size: 2em;
+    margin-bottom: 10px;
+  }
+
+  .modal-content p {
+    font-size: 1.4em;
+    line-height: 1.4;
+    margin-bottom: 10px;
+  }
+
+  #modalAudioPlayer {
+    height: 55px;
+  }
+
+  .key-list li {
+    font-size: 0.9em;
+    padding: 12px 10px;
+  }
+
+  .close {
+    font-size: 32px;
   }
 }
