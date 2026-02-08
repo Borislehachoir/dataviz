@@ -41,7 +41,7 @@ body {
   right: 30px;
   width: 60px;
   height: 60px;
-  background: #7df9ff;
+  background: #00308f;
   border: none;
   border-radius: 50%;
   font-size: 28px;
@@ -50,7 +50,8 @@ body {
 }
 
 .modal-trigger:hover {
-  background-color: #519a9e;
+  background-color: #7df9ff;
+   box-shadow: 0 0 10px #ff0000, 0 0 20px #f5f5dc;
 }
 
 .modal {
@@ -335,6 +336,19 @@ nav.hidden {
   box-sizing: border-box;
 }
 
+#timelineSlider {
+  display : none;
+}
+
+#timelineYear {
+  font-weight:bold; margin-left:10px; color: white;
+ font-size: larger;
+}
+
+#timelineYear:hover {
+  color: #62bdc2;
+}
+
 .graph-stack {
   display: flex;
   flex-direction: column;
@@ -393,6 +407,13 @@ nav.hidden {
   font-weight: bold;
   cursor: pointer;
   border-radius: 8px;
+}
+
+.neon-2:hover {
+  background-color: #7df9ff;
+  color: #00308f;
+  border-radius: 8px;
+  transition: all 0.3s ease;
 }
 
 #gdpYear::-webkit-scrollbar {
