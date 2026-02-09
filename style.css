@@ -731,8 +731,9 @@ footer.piedepage {
   }
 }
 
-@media (max-width: 530px) {
-  .modal-trigger {
+/* MASQUER BOUTON MOBILE */
+@media screen and (max-width: 530px) {
+  button#openModal.modal-trigger {
     display: none !important;
   }
 }
