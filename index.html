@@ -66,7 +66,9 @@
                             <span style="color: #d2c2c2; font-weight: bold;">Oppenheimer Soundtrack</span> ~
                             <span style="font-style: italic;"> 1:50</span>
                         </li>
-                        <li><kbd>T</kbd> _ Doom Theme ~ <span style="font-style: italic;"> 1:38</span></li>
+                        <li><kbd>T</kbd> _ Doom Theme  - 
+                            <span style="color: #d2c2c2; font-weight: bold;"> Bobby Prince (original de Mick Gordon) </span> ~ 
+                            <span style="font-style: italic;"> 1:38</span></li>
                         <li><kbd>U</kbd> _ Under The Same Sun -
                             <span style="color: #d2c2c2; font-weight: bold;">Scorpions</span> ~
                             <span style="font-style: italic;"> 4:53</span>
@@ -575,6 +577,29 @@ document.querySelectorAll('.key-list li').forEach(function(li, index) {
         }, 300);
     });
 });
+
+function toggleModalTrigger() {
+  const btn = document.getElementById('openModal');
+  const mq = window.matchMedia('(max-width: 530px)');
+  
+  console.log('mq.matches =', mq.matches); // pour vérifier
+
+  if (!btn) return;
+
+  if (mq.matches) {
+    btn.classList.add('modal-trigger-hidden');
+    console.log('→ on AJOUTE modal-trigger-hidden');
+  } else {
+    btn.classList.remove('modal-trigger-hidden');
+    console.log('→ on ENLÈVE modal-trigger-hidden');
+  }
+}
+
+// au chargement
+toggleModalTrigger();
+
+// sur resize
+window.addEventListener('resize', toggleModalTrigger);
 
         // Fonction Hamburger
         function toggleMenu() {
