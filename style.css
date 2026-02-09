@@ -31,7 +31,8 @@ body {
   box-shadow: 0 0 10px #7df9ff;
 
 }
-/*Styles pour la modale musicale */
+
+/*Musique */
 
 .modal-trigger {
   position: fixed;
@@ -56,6 +57,7 @@ body {
 .modal-trigger-hidden {
   display: none !important;
 }
+
 .modal {
   position: fixed;
   z-index: 2000;
@@ -81,7 +83,7 @@ body {
   border: 2px solid #00d8d8;
   border-radius: 15px;
   max-width: 70%;
-  max-height: 80% ;
+  max-height: 80%;
   color: white;
   box-shadow: 0 10px 40px rgba(0, 216, 216, 0.3);
   animation: slideDown 0.4s ease;
@@ -95,13 +97,13 @@ body {
     transform: translateY(-100px);
     opacity: 0;
   }
+
   to {
     transform: translateY(0);
     opacity: 1;
   }
 }
 
-/* Bouton de fermeture */
 .close {
   color: #7df9ff;
   align-self: flex-end;
@@ -133,7 +135,6 @@ body {
   flex-shrink: 0;
 }
 
-/* Conteneur audio avec flex */
 .audio-container {
   display: flex;
   flex-direction: column;
@@ -179,7 +180,9 @@ body {
 .key-list li:hover {
   background: #0061c3;
 }
-/* Styles pour la scène d'introduction */
+
+
+/* Styles pour l'intro*/
 
 #intro-scene {
   position: fixed;
@@ -641,6 +644,8 @@ footer.piedepage {
 
 
 /*Media queries*/
+
+/*Ordi et écrans style tablette */
 
 @media (max-width: 1100px) {
   .options-neon {

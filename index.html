@@ -50,55 +50,57 @@
 
     <main>
         <div id="musicModal" class="modal">
-                <div class="modal-content">
-                    <span class="close">&times;</span>
-                    <h1>Playlist immersive</h1>
-                    <p>Ce site s'accompagne d'une playlist pour être plus immersif.
-                        Pour arrêter la musique, appuyer à nouveau sur la même touche. Si c'est sur O, appuyez de
-                        nouveau sur O.
-                        Pour accéder aux titres, appuyer sur les touches suivantes :</p>
-                    <ul class="key-list">
-                        <li><kbd>N</kbd> _ Nobody Hurt No One -
-                            <span style="color: #d2c2c2; font-weight: bold;">Natalia Podolskaya</span> ~
-                            <span style="font-style: italic;"> 3:19</span>
-                        </li>
-                        <li><kbd>O</kbd> _ Can You Hear The Music -
-                            <span style="color: #d2c2c2; font-weight: bold;">Oppenheimer Soundtrack</span> ~
-                            <span style="font-style: italic;"> 1:50</span>
-                        </li>
-                        <li><kbd>T</kbd> _ Doom Theme  - 
-                            <span style="color: #d2c2c2; font-weight: bold;"> Bobby Prince (original de Mick Gordon) </span> ~ 
-                            <span style="font-style: italic;"> 1:38</span></li>
-                        <li><kbd>U</kbd> _ Under The Same Sun -
-                            <span style="color: #d2c2c2; font-weight: bold;">Scorpions</span> ~
-                            <span style="font-style: italic;"> 4:53</span>
-                        </li>
-                        <li><kbd>W</kbd> _ News From The War -
-                            <span style="color: #d2c2c2; font-weight: bold;">Dreams We've Had</span> ~
-                            <span style="font-style: italic;"> 4:44 </span>
-                        </li>
-                        <li><kbd>A</kbd>_ Crystal Valley -
-                            <span style="color: #d2c2c2; font-weight: bold;">Daisuke Kashiwa</span> ~
-                            <span style="font-style: italic;"> 6:01</span>
-                        </li>
-                        <li><kbd>R</kbd>_ Le Jardinier Du Couvent -
-                            <span style="color: #d2c2c2; font-weight: bold;">Malicorne </span> ~
-                            <span style="font-style: italic;"> 9:03</span>
-                        </li>
-                    </ul>
-                      <p>Si vous n'êtes pas sur ordinateur, utilisez l'outil suivant : </p>
-                    <div style="text-align: center; margin: 20px 0;">
-                        <audio id="modalAudioPlayer" controls style="width: 100%; max-width: 400px;">
-                            <source src="" type="audio/mpeg">
-                            Votre navigateur ne supporte pas l'élément audio.
-                        </audio>
-                        <p id="nowPlaying" style="margin-top: 10px; color: #7df9ff; font-style: italic;">Aucune chanson
-                            en cours</p>
-                    </div>
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h1>Playlist immersive</h1>
+                <p>Ce site s'accompagne d'une playlist pour être plus immersif.
+                    Pour arrêter la musique, appuyer à nouveau sur la même touche. Si c'est sur O, appuyez de
+                    nouveau sur O.
+                    Pour accéder aux titres, appuyer sur les touches suivantes :</p>
+                <ul class="key-list">
+                    <li><kbd>N</kbd> _ Nobody Hurt No One -
+                        <span style="color: #d2c2c2; font-weight: bold;">Natalia Podolskaya</span> ~
+                        <span style="font-style: italic;"> 3:19</span>
+                    </li>
+                    <li><kbd>O</kbd> _ Can You Hear The Music -
+                        <span style="color: #d2c2c2; font-weight: bold;">Oppenheimer Soundtrack</span> ~
+                        <span style="font-style: italic;"> 1:50</span>
+                    </li>
+                    <li><kbd>T</kbd> _ Doom Theme -
+                        <span style="color: #d2c2c2; font-weight: bold;"> Bobby Prince (original de Mick Gordon) </span>
+                        ~
+                        <span style="font-style: italic;"> 1:38</span>
+                    </li>
+                    <li><kbd>U</kbd> _ Under The Same Sun -
+                        <span style="color: #d2c2c2; font-weight: bold;">Scorpions</span> ~
+                        <span style="font-style: italic;"> 4:53</span>
+                    </li>
+                    <li><kbd>W</kbd> _ News From The War -
+                        <span style="color: #d2c2c2; font-weight: bold;">Dreams We've Had</span> ~
+                        <span style="font-style: italic;"> 4:44 </span>
+                    </li>
+                    <li><kbd>A</kbd>_ Crystal Valley -
+                        <span style="color: #d2c2c2; font-weight: bold;">Daisuke Kashiwa</span> ~
+                        <span style="font-style: italic;"> 6:01</span>
+                    </li>
+                    <li><kbd>R</kbd>_ Le Jardinier Du Couvent -
+                        <span style="color: #d2c2c2; font-weight: bold;">Malicorne </span> ~
+                        <span style="font-style: italic;"> 9:03</span>
+                    </li>
+                </ul>
+                <p>Si vous n'êtes pas sur ordinateur, utilisez l'outil suivant : </p>
+                <div style="text-align: center; margin: 20px 0;">
+                    <audio id="modalAudioPlayer" controls style="width: 100%; max-width: 400px;">
+                        <source src="" type="audio/mpeg">
+                        Votre navigateur ne supporte pas l'élément audio.
+                    </audio>
+                    <p id="nowPlaying" style="margin-top: 10px; color: #7df9ff; font-style: italic;">Aucune chanson
+                        en cours</p>
                 </div>
             </div>
+        </div>
         <section>
-            
+
 
             <h1 class="at-item" id="contexte">Bref contexte</h1>
 
@@ -192,7 +194,7 @@
     </footer>
     <script>
 
-
+        /* Graphiques */
 
         function formatMoney(n) {
             if (n === null || n === undefined) return '-';
@@ -351,7 +353,7 @@
                 });
             }
 
-            // --- Initialisation des 3 graphiques ---
+            /*Initialisation des 3 graphiques */
             createBarLineChart(
                 'chartBest',
                 'Top 10 Pays avec le meilleur rapport PIB vs Taux de décès',
@@ -378,228 +380,216 @@
             );
         });
 
-       /*Musique*/
+        /*Musique*/
 
-var modal = document.getElementById("musicModal");
-var btn = document.getElementById("openModal");
-var span = document.getElementsByClassName("close")[0];
+        var modal = document.getElementById("musicModal");
+        var btn = document.getElementById("openModal");
+        var span = document.getElementsByClassName("close")[0];
 
-// Ajouter la classe hidden au départ
-modal.classList.add('hidden-modal');
+        modal.classList.add('hidden-modal');
 
-btn.onclick = function () {
-    modal.classList.remove('hidden-modal'); // Enlever la classe pour montrer
-}
+        btn.onclick = function () {
+            modal.classList.remove('hidden-modal');
+        }
 
-span.onclick = function () {
-    modal.classList.add('hidden-modal'); // Ajouter la classe pour cacher
-}
+        span.onclick = function () {
+            modal.classList.add('hidden-modal');
+        }
 
-window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.classList.add('hidden-modal'); // Ajouter la classe pour cacher
-    }
-}
-
-var n = true;
-var o = true;
-var t = true;
-var u = true;
-var w = true;
-var a = true;
-var r = true;
-
-var player = document.getElementById('audioPlayer');
-
-// Mapping des touches vers fichiers
-var songsMap = {
-    'n': 'assets/nobodyhurt.mp3',
-    'o': 'assets/oppenheimer.mp3',
-    't': 'assets/doomtheme.mp3',
-    'u': 'assets/underthesamesun.mp3',
-    'w': 'assets/newsfromthewar.mp3',
-    'a': 'assets/crystalvalley.mp3',
-    'r': 'assets/jardinier.mp3'
-};
-
-// Fonction générique pour jouer une chanson
-function playSong(songFile) {
-    player.setAttribute("src", songFile);
-    player.play();
-    
-    // Réinitialiser tous les flags à false
-    n = o = t = u = w = a = r = false;
-}
-
-$(document).keyup(function (e) {
-    console.log("One of the keys is up");
-    var code = e.keyCode || e.which;
-    var pressedChar = String.fromCharCode(code).toLowerCase();
-    
-    switch (pressedChar) {
-        case 'n':
-            if (n) {
-                playSong(songsMap['n']);
-            } else {
-                player.pause();
-                n = true;
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.classList.add('hidden-modal');
             }
-            break;
+        }
 
-        case 'o':
-            if (o) {
-                playSong(songsMap['o']);
-            } else {
-                player.pause();
-                o = true;
+        var n = true;
+        var o = true;
+        var t = true;
+        var u = true;
+        var w = true;
+        var a = true;
+        var r = true;
+
+        var player = document.getElementById('audioPlayer');
+
+        var songsMap = {
+            'n': 'assets/nobodyhurt.mp3',
+            'o': 'assets/oppenheimer.mp3',
+            't': 'assets/doomtheme.mp3',
+            'u': 'assets/underthesamesun.mp3',
+            'w': 'assets/newsfromthewar.mp3',
+            'a': 'assets/crystalvalley.mp3',
+            'r': 'assets/jardinier.mp3'
+        };
+
+        // Fonction jouer chanson
+        function playSong(songFile) {
+            player.setAttribute("src", songFile);
+            player.play();
+            n = o = t = u = w = a = r = false;
+        }
+
+        $(document).keyup(function (e) {
+            console.log("One of the keys is up");
+            var code = e.keyCode || e.which;
+            var pressedChar = String.fromCharCode(code).toLowerCase();
+
+            switch (pressedChar) {
+                case 'n':
+                    if (n) {
+                        playSong(songsMap['n']);
+                    } else {
+                        player.pause();
+                        n = true;
+                    }
+                    break;
+
+                case 'o':
+                    if (o) {
+                        playSong(songsMap['o']);
+                    } else {
+                        player.pause();
+                        o = true;
+                    }
+                    break;
+
+                case 't':
+                    if (t) {
+                        playSong(songsMap['t']);
+                    } else {
+                        player.pause();
+                        t = true;
+                    }
+                    break;
+
+                case 'u':
+                    if (u) {
+                        playSong(songsMap['u']);
+                    } else {
+                        player.pause();
+                        u = true;
+                    }
+                    break;
+
+                case 'w':
+                    if (w) {
+                        playSong(songsMap['w']);
+                    } else {
+                        player.pause();
+                        w = true;
+                    }
+                    break;
+
+                case 'a':
+                    if (a) {
+                        playSong(songsMap['a']);
+                    } else {
+                        player.pause();
+                        a = true;
+                    }
+                    break;
+
+                case 'r':
+                    if (r) {
+                        playSong(songsMap['r']);
+                    } else {
+                        player.pause();
+                        r = true;
+                    }
+                    break;
             }
-            break;
+        });
 
-        case 't':
-            if (t) {
-                playSong(songsMap['t']);
-            } else {
-                player.pause();
-                t = true;
+        var lastSong = null;
+
+        player.addEventListener('ended', function () {
+            var keys = ['n', 'o', 't', 'u', 'w', 'a', 'r'];
+
+            var song;
+
+            do {
+                song = keys[Math.floor(Math.random() * keys.length)];
+            } while (song === lastSong && keys.length > 1);
+
+            lastSong = song;
+
+            playSong(songsMap[song]);
+
+            console.log("Morceau suivant : " + song.toUpperCase());
+        });
+
+        var modalPlayer = document.getElementById('modalAudioPlayer');
+        var nowPlaying = document.getElementById('nowPlaying');
+
+        var songNames = {
+            'assets/nobodyhurt.mp3': 'Nobody Hurt No One - Natalia Podolskaya',
+            'assets/oppenheimer.mp3': 'Can You Hear The Music - Oppenheimer',
+            'assets/doomtheme.mp3': 'Doom Theme - Bobby Prince (original de Mick Gordon)',
+            'assets/underthesamesun.mp3': 'Under The Same Sun - Scorpions',
+            'assets/newsfromthewar.mp3': 'News From The War - Dreams We\'ve Had',
+            'assets/crystalvalley.mp3': 'Crystal Valley - Daisuke Kashiwa',
+            'assets/jardinier.mp3': 'Le Jardinier Du Couvent - Malicorne'
+        };
+
+        player.addEventListener('loadstart', function () {
+            var currentSrc = player.getAttribute('src');
+            modalPlayer.src = currentSrc;
+            nowPlaying.textContent = '♪ ' + (songNames[currentSrc] || 'En cours...');
+        });
+
+        player.addEventListener('play', function () {
+            modalPlayer.currentTime = player.currentTime;
+        });
+
+        player.addEventListener('pause', function () {
+            modalPlayer.pause();
+        });
+
+        modalPlayer.addEventListener('play', function () {
+            if (player.paused) {
+                player.currentTime = modalPlayer.currentTime;
+                player.play();
             }
-            break;
+        });
 
-        case 'u':
-            if (u) {
-                playSong(songsMap['u']);
+        modalPlayer.addEventListener('pause', function () {
+            player.pause();
+        });
+
+        document.querySelectorAll('.key-list li').forEach(function (li, index) {
+            li.style.cursor = 'pointer';
+
+            li.addEventListener('click', function () {
+                var keyMap = ['n', 'o', 't', 'u', 'w', 'a', 'r'];
+                var key = keyMap[index];
+                playSong(songsMap[key]);
+                li.style.backgroundColor = '#0061c3';
+                setTimeout(function () {
+                    li.style.backgroundColor = '#003874';
+                }, 300);
+            });
+        });
+
+        function toggleModalTrigger() {
+            const btn = document.getElementById('openModal');
+            const mq = window.matchMedia('(max-width: 530px)');
+
+            console.log('mq.matches =', mq.matches);
+
+            if (!btn) return;
+
+            if (mq.matches) {
+                btn.classList.add('modal-trigger-hidden');
+                console.log('→ on AJOUTE modal-trigger-hidden');
             } else {
-                player.pause();
-                u = true;
+                btn.classList.remove('modal-trigger-hidden');
+                console.log('→ on ENLÈVE modal-trigger-hidden');
             }
-            break;
+        }
 
-        case 'w':
-            if (w) {
-                playSong(songsMap['w']);
-            } else {
-                player.pause();
-                w = true;
-            }
-            break;
+        toggleModalTrigger();
 
-        case 'a':
-            if (a) {
-                playSong(songsMap['a']);
-            } else {
-                player.pause();
-                a = true;
-            }
-            break;
-
-        case 'r':
-            if (r) {
-                playSong(songsMap['r']);
-            } else {
-                player.pause();
-                r = true;
-            }
-            break;
-    }
-});
-
-var lastSong = null;
-
-player.addEventListener('ended', function () {
-    var keys = ['n', 'o', 't', 'u', 'w', 'a', 'r'];
-
-    var song;
-
-    do {
-        song = keys[Math.floor(Math.random() * keys.length)];
-    } while (song === lastSong && keys.length > 1);
-
-    lastSong = song;
-
-    playSong(songsMap[song]);
-
-    console.log("Morceau suivant : " + song.toUpperCase());
-});
-
-var modalPlayer = document.getElementById('modalAudioPlayer');
-var nowPlaying = document.getElementById('nowPlaying');
-
-var songNames = {
-    'assets/nobodyhurt.mp3': 'Nobody Hurt No One - Natalia Podolskaya',
-    'assets/oppenheimer.mp3': 'Can You Hear The Music - Oppenheimer',
-    'assets/doomtheme.mp3': 'Doom Theme',
-    'assets/underthesamesun.mp3': 'Under The Same Sun - Scorpions',
-    'assets/newsfromthewar.mp3': 'News From The War - Dreams We\'ve Had',
-    'assets/crystalvalley.mp3': 'Crystal Valley - Daisuke Kashiwa',
-    'assets/jardinier.mp3': 'Le Jardinier Du Couvent - Malicorne'
-};
-
-player.addEventListener('loadstart', function () {
-    var currentSrc = player.getAttribute('src');
-    modalPlayer.src = currentSrc;
-    nowPlaying.textContent = '♪ ' + (songNames[currentSrc] || 'En cours...');
-});
-
-player.addEventListener('play', function () {
-    modalPlayer.currentTime = player.currentTime;
-});
-
-player.addEventListener('pause', function () {
-    modalPlayer.pause();
-});
-
-modalPlayer.addEventListener('play', function () {
-    if (player.paused) {
-        player.currentTime = modalPlayer.currentTime;
-        player.play();
-    }
-});
-
-modalPlayer.addEventListener('pause', function () {
-    player.pause();
-});
-
-// NOUVEAU : Rendre les chansons cliquables
-document.querySelectorAll('.key-list li').forEach(function(li, index) {
-    li.style.cursor = 'pointer';
-    
-    li.addEventListener('click', function() {
-        // Récupérer la touche correspondante
-        var keyMap = ['n', 'o', 't', 'u', 'w', 'a', 'r'];
-        var key = keyMap[index];
-        
-        // Jouer la chanson
-        playSong(songsMap[key]);
-        
-        // Animation visuelle
-        li.style.backgroundColor = '#0061c3';
-        setTimeout(function() {
-            li.style.backgroundColor = '#003874';
-        }, 300);
-    });
-});
-
-function toggleModalTrigger() {
-  const btn = document.getElementById('openModal');
-  const mq = window.matchMedia('(max-width: 530px)');
-  
-  console.log('mq.matches =', mq.matches); // pour vérifier
-
-  if (!btn) return;
-
-  if (mq.matches) {
-    btn.classList.add('modal-trigger-hidden');
-    console.log('→ on AJOUTE modal-trigger-hidden');
-  } else {
-    btn.classList.remove('modal-trigger-hidden');
-    console.log('→ on ENLÈVE modal-trigger-hidden');
-  }
-}
-
-// au chargement
-toggleModalTrigger();
-
-// sur resize
-window.addEventListener('resize', toggleModalTrigger);
+        window.addEventListener('resize', toggleModalTrigger);
 
         // Fonction Hamburger
         function toggleMenu() {
