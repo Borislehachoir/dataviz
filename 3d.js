@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var myChart = echarts.init(chartDom, 'dark');
     var allCountriesData = [];
 
-    // Dictionnaire de traduction
+    /* Dictionnaire de traduction */
     const countryNamesFr = {
         "Albania": "Albanie", "Algeria": "Algérie", "Andorra": "Andorre", "American Samoa": "Samoa américaines",
         "Antigua and Barbuda": "Antigua-et-Barbuda", "Argentina": "Argentine",

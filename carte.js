@@ -1,6 +1,4 @@
-/* ============================================================
-   1. VARIABLES GLOBALES
-============================================================ */
+/* Variables de base*/
 let map, geoLayer;
 
 const countryNamesFr = {
@@ -63,7 +61,7 @@ function getCountryNameFr(nameEn) {
     return countryNamesFr[nameEn] || nameEn;
 }
 
-// -------- NORMALISATION DES NOMS ----------
+/*Normaliser noms et distance de Levenshtein pour correspondance approximative*/
 function normalizeName(name) {
     return name
         .toLowerCase()
@@ -74,7 +72,6 @@ function normalizeName(name) {
         .trim();
 }
 
-// ------- LEVENSHTEIN --------
 function levenshtein(a, b) {
     const matrix = Array.from({ length: a.length + 1 }, (_, i) => [i]);
     for (let j = 0; j <= b.length; j++) matrix[0][j] = j;
@@ -92,7 +89,6 @@ function levenshtein(a, b) {
     return matrix[a.length][b.length];
 }
 
-// -------- BEST MATCH --------
 function bestMatch(countryName, candidates) {
     const normA = normalizeName(countryName);
     let best = null;
@@ -120,7 +116,7 @@ let timelineIndex = 0;
 let timelineTimer = null;
 let timelineReady = false;
 
-/*2. INITIALISATION LEAFLET*/
+/*Initialiser Leaflet*/
 map = L.map('map').setView([20, 0], 2)
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -128,7 +124,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 4
 }).addTo(map);
 
-/* 3. INFOBOX*/
+/* Infobox*/
 const info = L.control();
 info.onAdd = function () {
     this._div = L.DomUtil.create('div', 'info');
@@ -143,7 +139,6 @@ info.update = function (props) {
 
     const name = props.name_fr || props.name;
 
-    // Valeur de l’indicateur (guns ou GDP)
     const value = indicator === "guns"
         ? props[gunsField]
         : props[gdpYear];
@@ -154,9 +149,7 @@ info.update = function (props) {
 };
 info.addTo(map);
 
-/* ============================================================
-   4. COULEURS
-============================================================ */
+/* Couleur PIB et stats sur armes (taux ou nb d'armes) */
 const getColorGuns = d =>
     d > 10000000 ? "#800026" :
         d > 1000000 ? "#b30000" :
@@ -183,7 +176,6 @@ const style = feature => {
         ? feature.properties[gunsField]
         : feature.properties[gdpYear];
 
-    // Vérifier si la valeur est dans les seuils actifs
     const thresholds = indicator === "guns" ? gunThresholds : gdpThresholds;
     const isVisible = thresholds.some(t => t.active && val >= t.min && val < t.max);
 
@@ -231,7 +223,7 @@ function onEachFeature(feature, layer) {
     });
 }
 
-/* 7. LÉGENDE */
+/* légende carte */
 let gunThresholds = [
     { min: 0.1, max: 0.3, active: true },
     { min: 0.3, max: 0.5, active: true },
@@ -306,14 +298,13 @@ Promise.all([
     d3.csv("gdp-by-country_cleaned.csv")
 ]).then(init);
 
-/* 9. INITIALISATION APRÈS CHARGEMENT */
+/* Charger et re- initialiser carte  */
 function init([geo, guns, gdp]) {
 
     worldData = geo;
     gunData = guns;
     gdpData = gdp;
 
-    // Années PIB
     timelineYears = Object.keys(gdp[0]).filter(k => /^[0-9]{4}$/.test(k));
     timelineIndex = timelineYears.indexOf("2023");
 
@@ -326,7 +317,6 @@ function init([geo, guns, gdp]) {
         gdpSelect.appendChild(opt);
     });
 
-    // Nettoyage valeur
     function cleanNumber(v) {
         if (!v) return null;
         v = v.toString()
@@ -340,7 +330,7 @@ function init([geo, guns, gdp]) {
         return isNaN(n) ? null : n;
     }
 
-    // Fusion données
+    /*fusion des données */
     const gunNames = gunData.map(d => d.Country);
     const gdpNames = gdpData.map(d => d["Country Name"]);
 
@@ -365,10 +355,9 @@ function init([geo, guns, gdp]) {
         }
     });
 
-    // Ajout carte
+    /*Ajouter le geojson */
     geoLayer = L.geoJson(worldData, { style, onEachFeature }).addTo(map);
 
-    // Timeline
     const slider = document.getElementById("timelineSlider");
     slider.max = timelineYears.length - 1;
     slider.value = timelineIndex;
@@ -377,9 +366,7 @@ function init([geo, guns, gdp]) {
     timelineReady = true;
 }
 
-/* ============================================================
-   10. TIMELINE
-============================================================ */
+/* timeline */
 function updateYearDisplay() {
     document.getElementById("timelineYear").textContent = gdpYear;
     document.getElementById("yearOverlay").textContent = gdpYear;
@@ -397,29 +384,24 @@ function nextYear() {
     setYearFromIndex();
 }
 
-// PLAY
 document.getElementById("playTimeline").addEventListener("click", () => {
     if (!timelineReady) return;
     if (!timelineTimer) timelineTimer = setInterval(nextYear, 1000);
 });
 
-// PAUSE
 document.getElementById("pauseTimeline").addEventListener("click", () => {
     if (!timelineReady) return;
     clearInterval(timelineTimer);
     timelineTimer = null;
 });
 
-// SLIDER
 document.getElementById("timelineSlider").addEventListener("input", e => {
     if (!timelineReady) return;
     timelineIndex = +e.target.value;
     setYearFromIndex();
 });
 
-/* ============================================================
-   11. CHANGEMENT INDICATEURS
-============================================================ */
+/* changer indicateur (de gdp a stats sur armes) */
 document.getElementById("indicator").addEventListener("change", e => {
     indicator = e.target.value;
     updateLegend();
